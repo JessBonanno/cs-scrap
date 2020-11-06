@@ -410,115 +410,187 @@ def efficientRoadNetwork(n, roads):
 
 
 """
-Given two words ( start_word and end_word), and a dictionary's word list, 
-return the shortest transformation sequence from begin_word to end_word, 
-such that:
+*** Financial Crisis ***
+------------------------
+Once upon a time, in a kingdom far, far away, there lived a King Byteasar IV. His kingdom in the middle of a financial crisis, Byteasar was struggling to keep the economy out of a recession. Unfortunately there was not much he could do, and after much agonizing he came to the only solution: one of his cities had to be demolished, since keeping communication active between all the cities is way too expensive.
 
-only one letter can be changed at a time.
+It is not yet known if Byteasar chose a city to destroy after careful planning or picked one at random. As a person with a PhD in History and Nobel prize in Computer Science, you can solve this mystery! Archaeologists have recently found a manuscript with information about the roads between the cities, that is now stored in the roadRegister matrix. You want to try and remove each city one by one and compare the road registers obtained this way. Thus you'll be able to compare the obtained roads and determine whether the one picked by Byteasar was the best by some criteria.
 
-each transformed word must exist in the word list.  Note that start_word is 
-not a transformed word.
+Given the roadRegister, return an array of all the road registers obtained after removing each of the cities one by one.
 
-Note:
+Example
 
-Return None if there is no such transformation sequence.
-All words contain only lowercase alphabetic chars.
-You may assume no duplicates in the word list.
-You may assume start-word and end_word are non-empty and are not the same.
+For
 
-Sample:
-start_word = 'hit'
-end_word = 'cog'
-return: ['hit', 'hot', 'cot', 'cog'] 
-"""
-words = set()
-with open('words.txt') as f:
-    for w in f:
-        w = w.strip().lower()
-        words.add(w)
+roadRegister = [[false, true,  true,  false],
+                [true,  false, true,  false],
+                [true,  true,  false, true ],
+                [false, false, true,  false]]
+the output should be
 
-
-# create function to get all the neighbors of a word ( only 1 letter diff)
-def get_neighbors(word):
-    neighbors = []
-    for w in words:
-        if len(w) == len(word):
-            diff = 0
-            for i in range(len(w)):
-                if w[i] != word[i]:
-                    diff += 1
-                if diff > 1:
-                    break
-            if diff == 1:
-                neighbors.append(w)
-    return neighbors
-
-
-print(get_neighbors('hit'))
-
-
-# BFS to solve this (not sure why takes much longer than guided)
-def bfs(start_word, end_word):
-    print('s, e', start_word, end_word)
-    visited = set()
-    q = [[start_word]]
-
-    while q:
-        path = q.pop(0)
-
-        v = path[-1]
-        if v not in visited:
-            visited.add(v)
-            if v == end_word:
-                return path
-            # only need get_neighbors and not the entire graph
-            for neighbor in get_neighbors(v):
-                path_copy = path + [neighbor]
-                q.append(path_copy)
-
-
-print(bfs('hit', 'cog'))
-
-"""
-Codesignal Project
+financialCrisis(roadRegister) = [
+  [[false, true,  false],
+   [true,  false, true ],
+   [false, true,  false]],
+  [[false, true,  false],
+   [true,  false, true ],
+   [false, true,  false]],
+  [[false, true,  false],
+   [true,  false, false],
+   [false, false, false]],
+  [[false, true,  true ],
+   [true,  false, true ],
+   [true,  true,  false]]
+]
 """
 
+roadRegister = [[False, False, False, False, True, False],
+                [False, False, True, False, True, False],
+                [False, True, False, True, True, True],
+                [False, False, True, False, False, False],
+                [True, True, True, False, False, True],
+                [False, False, True, False, True, False]]
+
+
+def financialCrisis(roadRegister):
+    # the results will contain a copy of the matrix reflecting each city
+    # removed one at a time
+    # create result array to hold final result
+    result = []
+
+    # helper function to remove the current city
+    def remove_city(current_city):
+        # print(roadRegister[current_city + 1:])
+        new_road_register = []
+        for i in range(len(roadRegister)):
+            if roadRegister[i] != roadRegister[current_city]:
+                new_road_register.append(roadRegister[i])
+        return new_road_register
+
+    # helper function to remove the roads of removed city
+    def remove_roads(city, road_to_remove):
+        # if the road is not the road to remove save it in new array
+        kept_roads = []
+        for i in range(len(city)):
+            if i != road_to_remove:
+                kept_roads.append(city[i])
+        return kept_roads
+
+    # iterate the matrix
+
+    for city in range(len(roadRegister)):
+        new_register = []
+        # remove the city array
+        temp_road_register = (remove_city(city))
+        # remove the road element of each other array
+        for i in range(len(temp_road_register)):
+            # add that to the result matrix
+            new_register.append(remove_roads(temp_road_register[i], city))
+        print('new register', new_register)
+        result.append(new_register)
+
+    # return result
+
+
+# print(financialCrisis(roadRegister))
+
+# not sure why the expected output only wants 4 registers returned when the
+# matrix has 6 cities
+# [[[false,true,false,true,false],[true,false,true,true,true],[false,true,false,false,false],[true,true,false,false,true],[false,true,false,true,false]],
+#  [[false,false,false,true,false],[false,false,true,true,true],[false,true,false,false,false],[true,true,false,false,true]],
+#  [[false,false,false,true,false],[false,false,false,true,false],[false,false,false,false,false],[true,true,false,false,true],[false,false,false,true,false]],
+#  [[false,false,false,true,false],[false,false,true,true,false],[false,true,false,true,true],[true,true,true,false,true],[false,false,true,true,false]],
+#  [[false,false,false,false,false],[false,false,true,false,false],[false,true,false,true,true],[false,false,true,false,false],[false,false,true,false,false]],
+#  [[false,false,false,false,true],[false,true,false,true,true],[false,false,true,false,false],[true,true,true,false,false]]]
+# Expected Output:
+# [[[false,true,false,true,false],[true,false,true,true,true],[false,true,false,false,false],[true,true,false,false,true],[false,true,false,true,false]],
+#  [[false,false,false,true,false],[false,false,true,true,true],[false,true,false,false,false],[true,true,false,false,true],[false,true,false,true,false]],
+#  [[false,false,false,true,false],[false,false,false,true,false],[false,false,false,false,false],[true,true,false,false,true],[false,false,false,true,false]],
+#  [[false,false,false,true,false],[false,false,true,true,false],[false,true,false,true,true],[true,true,true,false,true],[false,false,true,true,false]]]
+
+
 """
-*** csFriendCircles ***
------------------------
-There are N students in a baking class together. Some of them are friends, while some are not friends. The students' friendship can be considered transitive. This means that if Ami is a direct friend of Bill, and Bill is a direct friend of Casey, Ami is an indirect friend of Casey. A friend circle is a group of students who are either direct or indirect friends.
+*** Has Deadlock ***
+--------------------
+Note: Try to solve this task in O(m + n) or O(n) time, where n is a number of vertices and m is a number of edges, since this is what you'll be asked to do during an interview.
 
-Given a N*N matrix M representing the friend relationships between students in the class. If M[i][j] = 1, then the ith and jth students are direct friends with each other, otherwise not.
+In a multithreaded environment, it's possible that different processes will need to use the same resource. A wait-for graph represents the different processes as nodes in a directed graph, where an edge from node i to node j means that the node j is using a resource that node i needs to use (and cannot use until node j releases it).
 
-You need to write a function that can output the total number of friend circles among all the students.
+We are interested in whether or not this digraph has any cycles in it. If it does, it is possible for the system to get into a state where no process can complete.
 
-Example 1:
+We will represent the processes by integers 0, ...., n - 1. We represent the edges using a two-dimensional list connections. If j is in the list connections[i], then there is a directed edge from process i to process j.
 
-Input: 
-[[1,1,0],
- [1,1,0],
- [0,0,1]]
-Output: 2
-Explanation: The 0th and 1st students are direct friends, so they are in a friend circle. 
-The 2nd student himself is in a friend circle. So return 2.
-Example 2:
+Write a function that returns True if connections describes a graph with a directed cycle, or False otherwise.
+Example
 
-Input: 
-[[1,1,0],
- [1,1,1],
- [0,1,1]]
-Output: 1
-Explanation: The 0th and 1st students are direct friends, the 1st and 2nd students are direct friends, 
-so the 0th and 2nd students are indirect friends. All of them are in the same friend circle, so return 1.
+For connections = [[1], [2], [3, 4], [4], [0]], the output should be
+hasDeadlock(connections) = true.
+
+
+This graph contains a cycle.
+
+For connections = [[1, 2, 3], [2, 3], [3], []], the output should be
+hasDeadlock(connections) = false.
 """
 
-friendships = [[1, 1, 0],
-               [1, 1, 0],
-               [0, 0, 1]]
+connections = [[1], [2], [3, 4], [4], [0]]
+
+# connections = [[1, 2, 3], [2, 3], [3], []]
+
+connections = [[1, 2],
+               [2],
+               [],
+               [4],
+               [3]]
 
 
-def csFriendCircles(friendships):
-    pass
+def hasDeadlock(connections):
+    # find out if the graph has a cycle
+
+    # helper function to see if a nodes children are visited
+    def are_children_visited(vert):
+        print(connections[vert])
+        for i in range(len(connections[vert])):
+            if connections[vert][i] in visited:
+                return True
+                print('yes in visited **********')
+            else:
+                return False
+
+    # iterating the WHOLE array
+    for i in range(len(connections)):
+        # keep track of visited verts
+        visited = []
+        q = []
+        # creating a new q every iteration with the current index
+        q.append(i)
+
+        # while there is a vert in the q
+        while q:
+            cur = q.pop(0)
+            print('current after pop', cur)
+            # add the current vert to visited
+            visited.append(cur)
+            print('visited after append', visited)
+            # iterate the current verts neighbors
+            for i in range(len(connections[cur])):
+                neighbor = connections[cur][i]
+                print('neighbor just created', neighbor)
+                # check if any neighbors OR their neighbors are already in
+                # visited
+                # if they are in visited return True there IS a cycle
+                if neighbor in visited:
+                    if are_children_visited(neighbor):
+                        return True
+                    print('neighbor in visited', neighbor)
+                    print('visited', visited)
+                # else add the neigbor to the q if not already in the q
+                else:
+                    if neighbor not in q:
+                        q.append(neighbor)
+                        print('q appended neighbor', q)
+    # return False if we find no cycle
+    return False
 
 
-print(csFriendCircles(friendships))
+print(hasDeadlock(connections))

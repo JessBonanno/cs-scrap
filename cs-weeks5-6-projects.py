@@ -1422,4 +1422,75 @@ def csFriendCircles(friendships):
 
     return len(findConnectedFriends(g))
 
-# print(csFriendCircles(friendships))
+print(csFriendCircles(friendships))
+
+
+"""
+Given two words ( start_word and end_word), and a dictionary's word list, 
+return the shortest transformation sequence from begin_word to end_word, 
+such that:
+
+only one letter can be changed at a time.
+
+each transformed word must exist in the word list.  Note that start_word is 
+not a transformed word.
+
+Note:
+
+Return None if there is no such transformation sequence.
+All words contain only lowercase alphabetic chars.
+You may assume no duplicates in the word list.
+You may assume start-word and end_word are non-empty and are not the same.
+
+Sample:
+start_word = 'hit'
+end_word = 'cog'
+return: ['hit', 'hot', 'cot', 'cog'] 
+"""
+words = set()
+with open('words.txt') as f:
+    for w in f:
+        w = w.strip().lower()
+        words.add(w)
+
+
+# create function to get all the neighbors of a word ( only 1 letter diff)
+def get_neighbors(word):
+    neighbors = []
+    for w in words:
+        if len(w) == len(word):
+            diff = 0
+            for i in range(len(w)):
+                if w[i] != word[i]:
+                    diff += 1
+                if diff > 1:
+                    break
+            if diff == 1:
+                neighbors.append(w)
+    return neighbors
+
+
+print(get_neighbors('hit'))
+
+
+# BFS to solve this (not sure why takes much longer than guided)
+def bfs(start_word, end_word):
+    print('s, e', start_word, end_word)
+    visited = set()
+    q = [[start_word]]
+
+    while q:
+        path = q.pop(0)
+
+        v = path[-1]
+        if v not in visited:
+            visited.add(v)
+            if v == end_word:
+                return path
+            # only need get_neighbors and not the entire graph
+            for neighbor in get_neighbors(v):
+                path_copy = path + [neighbor]
+                q.append(path_copy)
+
+
+print(bfs('hit', 'cog'))
