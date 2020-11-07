@@ -1422,7 +1422,8 @@ def csFriendCircles(friendships):
 
     return len(findConnectedFriends(g))
 
-print(csFriendCircles(friendships))
+
+# print(csFriendCircles(friendships))
 
 
 """
@@ -1470,7 +1471,7 @@ def get_neighbors(word):
     return neighbors
 
 
-print(get_neighbors('hit'))
+# print(get_neighbors('hit'))
 
 
 # BFS to solve this (not sure why takes much longer than guided)
@@ -1493,4 +1494,158 @@ def bfs(start_word, end_word):
                 q.append(path_copy)
 
 
-print(bfs('hit', 'cog'))
+# print(bfs('hit', 'cog'))
+
+"""
+*** Sprint ***
+--------------
+"""
+"""
+csBSTRangeSum
+-------------
+You are given the root node of a binary search tree (BST).
+
+You need to write a function that returns the sum of values of all the nodes with a value between lower and upper (inclusive).
+
+The BST is guaranteed to have unique values.
+
+Example 1:
+
+Input:
+root = [10, 5, 15, 3, 7, null, 18]
+lower = 7
+upper = 15
+
+         10
+         / \
+        5  15
+       / \    \
+      3   7    18
+
+Output:
+32
+Example 2:
+
+Input:
+root = [10,5,15,3,7,13,18,1,null,6]
+lower = 6
+upper = 10
+
+           10
+          /  \
+       5       15
+     / \     /   \ 
+    3   7  13   18
+   /   /
+  1   6
+
+Output:
+23
+"""
+
+root = [10, 5, 15, 3, 7, None, 18]
+lower = 7
+upper = 15
+
+
+#
+# Binary trees are already defined with this interface:
+# class Tree(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.left = None
+#     self.right = None
+
+#
+# Binary trees are already defined with this interface:
+# class Tree(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.left = None
+#     self.right = None
+def csBSTRangeSum(root, lower, upper):
+    # variable to hold running sum of target numbers
+    range = []
+    # variable to hold the current node
+    cur = root
+
+    # search the tree to find all numbers within the range of lower and upper
+    # dfs
+    def helper(root):
+        if root is None:
+            return
+        helper(root.left)
+        if root.value <= upper and root.value >= lower:
+            print('value', root.value)
+            range.append(root.value)
+        helper(root.right)
+
+    def dfs(root):
+        helper(root)
+
+    dfs(root)
+    sum = 0
+    for num in range:
+        sum += num
+    return sum
+
+
+print(csBSTRangeSum(root, lower, upper))
+
+"""
+csBinaryTreeInvert
+------------------
+Given a binary tree, write a function that inverts the tree.
+
+Example:
+
+Input:
+     6
+   /   \
+  4     8
+ / \   / \
+2   5 7   9
+
+Output:
+     6
+   /   \
+  8     4
+ / \   / \
+9   7 5   2
+"""
+
+#
+# Binary trees are already defined with this interface:
+# class Tree(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.left = None
+#     self.right = None
+def csBinaryTreeInvert(root):
+    # use a bft to visit all levels and switch the positions of left and
+    # right children for each node at each level
+    if root is None:
+        return []
+
+    result = []
+    queue = []
+    queue.append(root)
+
+    while len(queue) != 0:
+        node = queue.pop(0)
+
+        left = node.left
+        right = node.right
+        node.left = right
+        node.right = left
+
+        if node.left is not None:
+            queue.append(node.right)
+
+        if node.right is not None:
+            queue.append(node.left)
+
+    return result
+
+
+
