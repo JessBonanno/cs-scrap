@@ -453,6 +453,7 @@ roadRegister = [[False, False, False, False, True, False],
 
 
 def financialCrisis(roadRegister):
+
     # the results will contain a copy of the matrix reflecting each city
     # removed one at a time
     # create result array to hold final result
@@ -491,11 +492,29 @@ def financialCrisis(roadRegister):
 
     # return result
 
+"""
+def financialCrisis(roadRegister):
+    newRegister = []
+    n = len(roadRegister)
+    newRegister = [ [ [roadRegister[j][k] for j in range(n) if j!=l] for k in range(n) if k!=l] for l in range(n)] 
+    return newRegister
 
+11:34
+def financialCrisis(r):
+    return [[v[:j] + v[j+1:] for i, v in enumerate(r) if i!=j] for j in range(len(r))]
+"""
 print(financialCrisis(roadRegister))
 
 # not sure why the expected output only wants 4 registers returned when the
+# accepted output
+# [[[false,true,false,true,false],[true,false,true,true,true],[false,true,false,false,false],[true,true,false,false,true],[false,true,false,true,false]],
+#  [[false,false,false,true,false],[false,false,true,true,true],[false,true,false,false,false],[true,true,false,false,true],[false,true,false,true,false]],
+#  [[false,false,false,true,false],[false,false,false,true,false],[false,false,false,false,false],[true,true,false,false,true],[false,false,false,true,false]],
+#  [[false,false,false,true,false],[false,false,true,true,false],[false,true,false,true,true],[true,true,true,false,true],[false,false,true,true,false]],
+#  [[false,false,false,false,false],[false,false,true,false,false],[false,true,false,true,true],[false,false,true,false,false],[false,false,true,false,false]],
+#  [[false,false,false,false,true],[false,false,true,false,true],[false,true,false,true,true],[false,false,true,false,false],[true,true,true,false,false]]]
 # matrix has 6 cities
+# my output ******************
 # [[[false,true,false,true,false],[true,false,true,true,true],[false,true,false,false,false],[true,true,false,false,true],[false,true,false,true,false]],
 #  [[false,false,false,true,false],[false,false,true,true,true],[false,true,false,false,false],[true,true,false,false,true]],
 #  [[false,false,false,true,false],[false,false,false,true,false],[false,false,false,false,false],[true,true,false,false,true],[false,false,false,true,false]],

@@ -88,6 +88,7 @@ class MyHashTable:
             self.keys[index] = None
             self.values[index] = None
 
+
 #
 # hash_table = MyHashTable()
 # print(hash_table.put("a", 1))
@@ -176,6 +177,438 @@ def are_words_sorted(words, alpha_order):
 
     return True
 
+
 # print(are_words_sorted(["were","where","yellow"], "habcdefgijklmnopqrstuvwxyz"))
 
 
+"""
+Codesignal 
+"""
+"""
+*** csFindTheSingleNumber ***
+-----------------------------
+You are given a non-empty array of integers.
+
+One element appears exactly once, with every other element appearing at least twice, perhaps more.
+
+Write a function that can find and return the element that appears exactly once.
+
+Example 1:
+
+Input: [1,1,2,1]
+Output: 2
+Example 2:
+
+Input: [1,2,1,2,1,2,80]
+Output: 80
+"""
+
+nums = [1, 1, 2, 1]
+
+
+def csFindTheSingleNumber(nums):
+    appearances = {}
+    # hash the list into a dict with the number of appearances being the value
+    # and the number itself as the key
+    for num in nums:
+        if num in appearances:
+            appearances[num] += 1
+        else:
+            appearances[num] = 1
+    # return the key with the value of 1
+    for key in appearances:
+        if appearances[key] == 1:
+            return key
+
+
+# print(csFindTheSingleNumber(nums))
+
+"""
+*** csAverageOfTopFive ***
+--------------------------
+Given a list of different students' scores, write a function that returns the average of each student's top five scores. You should return the averages in ascending order of the students' id numbers.
+
+Each entry (scores[i]) has the student's id number (scores[i][0]) and the student's score (scores[i][1]). The averages should be calculated using integer division.
+
+Example 1:
+
+Input: [[1,91],[1,92],[2,93],[2,97],[1,60],[2,77],[1,65],[1,87],[1,100],[2,100],[2,76]]
+Output: [[1,87],[2,88]]
+Explanation:
+The average student `1` is `87`.
+The average of student `2` is `88.6`, but with integer division is `88`.
+"""
+
+scores = [[1, 91], [1, 92], [2, 93], [2, 97], [1, 60], [2, 77], [1, 65],
+          [1, 87], [1, 100], [2, 100], [2, 76]]
+
+
+def csAverageOfTopFive(scores):
+    students_scores = {}
+    # create a dict with each student as the key and an array of their scores
+    # as the value
+    for score in scores:
+        student = score[0]
+        num = score[1]
+        if student in students_scores:
+            students_scores[student].append(num)
+        else:
+            students_scores[student] = [num]
+    # get the top 5 scores
+    # get the average score from each student and return it in an array
+    averages = []
+    for student in students_scores:
+        top_five = students_scores[student]
+        while len(top_five) > 5:
+            top_five.remove(min(top_five))
+        average = [student, (sum(top_five)) // len(
+            students_scores[student])]
+        averages.append(average)
+    return averages
+
+
+# print(csAverageOfTopFive(scores))
+
+
+"""
+*** csMaxNumberOfLambdas ***
+----------------------------
+Given a string text, you need to use the characters of text to form as many instances of the word "lambda" as possible.
+
+You can use each character in text at most once.
+
+Write a function that returns the maximum number of instances of "lambda" that can be formed.
+
+Example 1:
+
+Input: text = "mbxcdatlas"
+Output: 1
+Example 2:
+
+Input: text = "lalaaxcmbdtsumbdav"
+Output: 2
+Example 3:
+
+Input: text = "sctlamb"
+Output: 0
+"""
+
+text = "mbxcdatlas"
+# text = "sctlamb"
+text = "lalaaxcmbdtsumbdav"
+
+
+def csMaxNumberOfLambdas(text):
+    # create dict to hold number of times letters in lambda appear
+    lambdas = {"l": 0, "a": 0, "m": 0, "b": 0, "d": 0}
+    # the letter a will need to be twice the amount of other letters for each
+    # valid lambda
+
+    # get number count for valid letters from text
+    for letter in text:
+        if letter in lambdas:
+            lambdas[letter] += 1
+    # handle case if there are no lambdas in text
+    if lambdas["a"] / 2 != lambdas['l']:
+        return 0
+
+    if lambdas['l'] == lambdas['m'] and lambdas['l'] == lambdas['b'] and \
+            lambdas['l'] == lambdas['d']:
+        return lambdas['l']
+
+
+# print(csMaxNumberOfLambdas(text))
+
+"""
+week 8 guided
+"""
+"""
+*** Demo 1 ***
+--------------
+You are given a non-empty list of words.
+Write a function that returns the *k* most frequent elements.
+The list that you return should be sorted by frequency from highest to lowest.
+If two words have the same frequency, then the word with the lower alphabetical
+order should come first.
+Example 1:
+```plaintext
+Input:
+words = ["lambda", "school", "rules", "lambda", "school", "rocks"]
+k = 2
+Output:
+["lambda", "school"]
+Explanation:
+"lambda" and "school" are the two most frequent words.
+```
+Example 2:
+```plaintext
+Input:
+words = ["the", "sky", "is", "cloudy", "the", "the", "the", "cloudy", "is", "is"]
+k = 4
+Output:
+["the", "is", "cloudy", "sky"]
+Explanation:
+"the", "is", "cloudy", and "sky" are the four most frequent words. The words
+are sorted from highest frequency to lowest.
+```
+Notes:
+- `k` is always valid: `1 <= k <= number of unique elements.
+- words in the input list only contain lowercase letters.
+```
+"""
+words = ["the", "sky", "is", "cloudy", "the", "the", "the", "cloudy", "is",
+         "is"]
+k = 4
+words = ["lambda", "school", "rules", "lambda", "school", "rocks"]
+k = 2
+
+
+def top_k_frequent(words, k):
+    """
+    Input:
+    words -> List[str]
+    k -> int
+    Output:
+    List[str]
+    """
+    # create dict to hold words frequencies
+    word_freqs = {}
+    result = []
+    for word in words:
+        if word not in word_freqs:
+            word_freqs[word] = 1
+        else:
+            word_freqs[word] += 1
+    print(word_freqs)
+    print(max(word_freqs))
+    # populate the results until we have the k most frequent words
+    while len(result) < k:
+        result.append(max(word_freqs, key=word_freqs.get))
+        del word_freqs[max(word_freqs, key=word_freqs.get)]
+
+    return result
+
+
+# print(top_k_frequent(words, k))
+
+"""
+*** Demo 2 ***
+--------------
+Given a string, sort it in decreasing order based on the frequency of characters.
+Example 1:
+```plaintext
+Input:
+"free"
+Output:
+"eefr"
+Explanation:
+'e' appears twice while 'f' and 'r' appear once.
+So 'e' must appear before 'f' and 'r'. Therefore, "eerf" is also a valid answer.
+```
+Example 2:
+```plaintext
+Input:
+"dddbbb"
+Output:
+"dddbbb"
+Explanation:
+Both 'd' and 'b' appear three times, so "bbbddd" is also a valid answer.
+Note that "dbdbdb" is incorrect, as the same characters must be together.
+```
+Example 3:
+```plaintext
+Input:
+"Bbcc"
+Output:
+"ccBb"
+Explanation:
+"ccbB" is also a valid answer, but "Bbcc" is incorrect.
+Note that 'B' and 'b' are treated as two different characters.
+```
+"""
+
+
+def frequency_sort(s: str) -> str:
+    """
+    Inputs:
+    s -> str
+    Output:
+    str
+    """
+    # Your code here
+
+
+"""
+*** csisomorphicStrings ***
+---------------------------
+Given two strings a and b, determine if they are isomorphic.
+
+Two strings are isomorphic if the characters in a can be replaced to get b.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
+Example 1:
+
+Input: 
+a = "odd"
+b = "egg"
+
+Output:
+true
+Example 2:
+
+Input:
+a = "foo"
+b = "bar"
+
+Output:
+false
+Example 3:
+
+Input:
+a = "abca"
+b = "zbxz"
+
+Output:
+true
+Example 4:
+
+Input:
+a = "abc"
+b = ""
+
+Output:
+false
+"""
+
+a = "odd"
+b = "egg"
+
+
+def csIsomorphicStrings(a, b):
+    if len(set(a)) == len(set(b)):
+        return True
+    return False
+
+
+# print(csIsomorphicStrings(a, b))
+
+
+"""
+*** csWordPattern ***
+---------------------
+Given a pattern and a string a, find if a follows the same pattern.
+
+Here, to "follow" means a full match, such that there is a one-to-one correspondence between a letter in pattern and a non-empty word in s.
+
+Example 1:
+
+Input:
+pattern = "abba"
+a = "lambda school school lambda"
+
+Output: true
+Example 2:
+
+Input:
+pattern = "abba"
+a = "lambda school school coding"
+
+Output:
+false
+Example 3:
+
+Input:
+pattern = "aaaa"
+a = "lambda school school lambda"
+
+Output: false
+Example 4:
+
+Input:
+pattern = "abba"
+a = "lambda lambda lambda lambda"
+
+Output: false
+"""
+
+pattern = "abba"
+a = "lambda school school lambda"
+pattern = "abba"
+a = "lambda lambda lambda lambda"
+
+
+# pattern = "aaaa"
+# a = "lambda school school lambda"
+
+def csWordPattern(pattern, a):
+    word_arr = a.split(' ')
+    print(word_arr)
+
+    if len(pattern) != len(word_arr):
+        return False
+
+    pattern_map = {}
+    for i in range(len(pattern)):
+        print(pattern[i])
+        if pattern[i] not in pattern_map:
+            if word_arr[i] not in pattern_map.values():
+                pattern_map[pattern[i]] = word_arr[i]
+            else:
+                pattern_map[pattern[i]] = ''
+        elif pattern_map[pattern[i]] != word_arr[i]:
+            return False
+    print(pattern_map)
+    return True
+
+
+print(csWordPattern(pattern, a))
+
+"""
+*** csGroupAnagrams ***
+-----------------------
+Given an array of strings strs, write a function that can group the anagrams. The groups should be ordered such that the larger groups come first, with subsequent groups ordered in descending order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+Example 1:
+
+Input:
+strs = ["apt","pat","ear","tap","are","arm"]
+
+Output:
+[["apt","pat","tap"],["ear","are"],["arm"]]
+Example 2:
+
+Input:
+strs = [""]
+
+Output:
+[[""]]
+Example 3:
+
+Input:
+strs = ["a"]
+
+Output:
+[["a"]]
+"""
+
+strs = ["apt", "pat", "ear", "tap", "are", "arm"]
+
+
+def csGroupAnagrams(strs):
+    result = {}
+    for w in strs:
+        signature = ''.join(sorted(w))
+
+        if signature not in result:
+            result[signature] = []
+
+        result[signature].append(w)
+    all_results = []
+    for item in result:
+        all_results.append(result[item])
+
+    return all_results
+
+# print(csGroupAnagrams(strs))
