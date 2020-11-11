@@ -147,34 +147,48 @@ s2 = "cccbd"
 
 
 def mergeStrings(s1, s2):
-    s2_index = 0
-    s1_index = 0
     result = ''
-    print(s1_index)
-    print(s2_index)
-    larger = max(len(s1), len(s2))
-    print('larger', larger)
-    while s2_index < len(s2):
-        if s1.count(s1[s1_index]) < s2.count(s2[s2_index]):
-            print('s1 count', s1.count(s1[s1_index]))
-            print(s1[s1_index])
-            print(s2[s2_index])
-            print('s2 count', s2.count(s2[s2_index]))
-            if ord(s1[s1_index]) < ord(s2[s2_index]):
-                result += s1[s1_index]
-                s1_index += 1
-            else:
-                result += s2[s2_index]
-                s2_index += 1
-        else:
-            result += s2[s2_index]
-            s2_index += 1
+    long_i = 0
+    i = 0
+    long = ''
+    short = ''
+    if len(s1) > len(s2):
+        long = s1
+        short = s2
+    else:
+        long = s2
+        short = s1
+    short_map = {}
+    long_map = {}
+    for letter in short:
+        if letter not in short_map:
+            short_map[letter] = 0
+        short_map[letter] += 1
 
-    if s1_index == len(s1):
-        result += s2[s2_index:]
-    if s2_index == len(s2):
-        result += s1[s1_index:]
-    print(result)
+    for letter in long:
+        if letter not in long_map:
+            long_map[letter] = 0
+        long_map[letter] += 1
+
+    while i < len(short):
+        print('i', i)
+        print('long_i', long_i)
+        print(chr(max(ord(short[i]), ord(long[long_i]))))
+        if short_map[short[i]] < long_map[long[long_i]]:
+            result += short[i]
+            i += 1
+        elif short_map[short[i]] > long_map[long[long_i]]:
+            result += long[long_i]
+            long_i += 1
+        else:
+            result += chr(min(ord(short[i]), ord(long[long_i])))
+            if ord(short[i]) > ord(long[long_i]):
+                long_i += 1
+            else:
+                i += 1
+    if i == len(short):
+        result += long[long_i:]
+
     return result
 
 

@@ -79,7 +79,7 @@ class MyHashTable:
 
             index = (index + 1) % self.size
 
-        return None
+        return -1
 
     def remove(self, key: int) -> None:
         # Your code here
@@ -140,6 +140,8 @@ Notes:
 - order.length == 26
 - All characters in words[i] and order are English lowercase letters.
 """
+words = ["lambd", "school"]
+order = "hlabcdefgijkmnopqrstuvwxyz"
 
 
 def are_words_sorted(words, alpha_order):
@@ -151,7 +153,7 @@ def are_words_sorted(words, alpha_order):
     bool
     """
     # Your code here
-    # map the letters of the string to a dictionary
+    # map the letters of the string alpha_order to a dictionary
     hashed_letters = {}
     count = 0
     for letter in alpha_order:
@@ -160,26 +162,28 @@ def are_words_sorted(words, alpha_order):
     # iterate the array
     for word in range(len(words) - 1):
 
-        # check if the first word is longer than the 2nd word if so return False
-        if len(words[word]) > len(words[word + 1]):
-            return False
         # iterate the first word
         for letter in range(len(words[word])):
             # create variables for the letters to check
             first_letter = words[word][letter]
             second_letter = words[word + 1][letter]
             print('first', first_letter, 'second', second_letter)
+
             if hashed_letters[first_letter] < hashed_letters[second_letter]:
-                return True
+                break
             # if first word1[i] comes after 2nd word2[i] return False
+            if len(words[word]) <= len(words[word + 1]):
+                break
             if hashed_letters[first_letter] > hashed_letters[second_letter]:
+                return False
+                # check if the first word is longer than the 2nd word if so return False
+            if len(words[word]) > len(words[word + 1]):
                 return False
 
     return True
 
 
-# print(are_words_sorted(["were","where","yellow"], "habcdefgijklmnopqrstuvwxyz"))
-
+print(are_words_sorted(words, order))
 
 """
 Codesignal 
@@ -561,7 +565,7 @@ def csWordPattern(pattern, a):
     return True
 
 
-print(csWordPattern(pattern, a))
+# print(csWordPattern(pattern, a))
 
 """
 *** csGroupAnagrams ***
