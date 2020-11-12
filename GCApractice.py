@@ -435,37 +435,65 @@ queryType = ["insert", "insert", "addToValue", "addToKey", "get"]
 query = [[1, 2], [2, 3], [2], [1], [3]]
 
 def hashMap(queryType, query):
+    # variable to hold the sum of each 'get' query type
     sum_of_gets = 0
-    first_hash = {1: 1, 2: 1}
+    # variable to hold the hash table
+    query_hash = {}
+    # variable to hold a new hash table for use with the addToKey function
     addedHash = {}
 
+    # helper function to insert a new key value pair into the hash table
     def insert(key, value):
-        first_hash[key] = value
+        query_hash[key] = value
 
+    # helper function to get a value with a given key
     def get(key):
-        return first_hash[key]
+        return query_hash[key]
 
+    # helper function to increment all the keys by a given value
     def addToKey(value):
-        for key in first_hash:
-            addedHash[key + value] = first_hash[key]
+        # iterate all keys in the hash table
+        for key in query_hash:
+            # create a new key value pair in the addedHash table with the key
+            # incremented by the given value
+            addedHash[key + value] = query_hash[key]
 
+    # helper function to increment all the values by a given value
     def addToValue(value):
-        for key in first_hash:
-            first_hash[key] = first_hash[key] + value
+        # iterate all the keys in the hash table
+        for key in query_hash:
+            # increment the current value by the given value
+            query_hash[key] = query_hash[key] + value
 
+    # iterate the queryType array
     for i in range(len(queryType)):
+        # if the query type is insert
         if queryType[i] == 'insert':
+            # call the insert helper function with the values from the query
+            # array that corresponds to the query type
             insert(query[i][0], query[i][1])
+        # if the query type is get
         elif queryType[i] == 'get':
+            # increment the sum_of_gets with the value returned from calling
+            # the helper get function with the values from the query array
+            # that corresponds to the query type
             sum_of_gets += get(query[i][0])
-
+        # if the query type is addToValeu
         elif queryType[i] == 'addToValue':
+            # call the add to value helper function with the value from the
+            # query array that corresponds to the query type
             addToValue(query[i][0])
+        # else if the query type is addToKey
         else:
+            # call the addToKey helper function with the value from the
+            # query array that corresponds to the query type
             addToKey(query[i][0])
-            first_hash = addedHash
+            # then set the original query_hash to equal the new addedHash
+            # with the incremented keys
+            query_hash = addedHash
 
-    print(first_hash)
+    print(query_hash)
+    # return the sum of all the get calls
     return sum_of_gets
 
 
