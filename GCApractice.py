@@ -78,40 +78,62 @@ a = [1, 3, 5, 6, 4, 2]
 a = [1, 4, 5, 6, 3]
 a = [-92, -23, 0, 45, 89, 96, 99, 95, 89, 41, -17, -48]
 
-
+# not fully passing
 def alternatingSort(a):
+    # if the array contains only a single number just return True
     if len(a) == 1:
         return True
+    # empty array to hold the alternating sort
     b = []
+    # set first_i as the first index going left to right
     first_i = 0
+    # set last_i as the last index going from right to left
     last_i = len(a) - 1
+    # while first index is not larger than the last index ( moving past the
+    # mid point of the array )
     while not first_i > last_i:
         print('first', a[first_i])
         print('last', a[last_i])
-
+        # if the current number equals the last number we put into the new
+        # sorted array and the indexes have met in the middle
+        # return False
+        # (tests seem to want False if there are repeating numbers)
+        # (this logic needs to be tweaked)
         if a[first_i] == b[len(b) - 1] and first_i != last_i:
             print(b)
-
             return False
+        # if the indexes meet at any point
         if first_i == last_i:
+            # only add the number at that index once instead of for both
+            # index markers
             b.append(a[first_i])
             print(a[first_i])
             print(b[len(b) - 2])
+            # if the number about to be inserted into the new array is out of
+            # order just return False now
             if (a[first_i]) < b[len(b) - 2]:
                 print(b)
-
                 return False
+        # normal case where we're just inserting number at first index
+        # followed by number at last index
         else:
+            # insert first index number
             b.append(a[first_i])
+            # insert last index number
             b.append(a[last_i])
+            # if the number about to be inserted into the new array is out of
+            # order just return False now
             if a[first_i] > a[last_i]:
                 print(b)
-
                 return False
+        # increment first index
         last_i -= 1
+        # decrement last index
         first_i += 1
 
     print(b)
+    # if we reach this point the array should be sorted and we can just
+    # return true
     return True
 
 
