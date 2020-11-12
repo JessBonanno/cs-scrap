@@ -78,6 +78,7 @@ a = [1, 3, 5, 6, 4, 2]
 a = [1, 4, 5, 6, 3]
 a = [-92, -23, 0, 45, 89, 96, 99, 95, 89, 41, -17, -48]
 
+
 # not fully passing
 def alternatingSort(a):
     # if the array contains only a single number just return True
@@ -135,6 +136,7 @@ def alternatingSort(a):
     # if we reach this point the array should be sorted and we can just
     # return true
     return True
+
 
 # print(alternatingSort(a))
 
@@ -259,20 +261,30 @@ output = "owvieaqugaegbxggtaleegvrabhugzyx"
 expected = "owvieaqugtaleegvrabhugzyxgaegbxg"
 
 
+# this is a hot mess and not fully passing but getting around 260/300 on code
+# signal as is
 def mergeStrings(s1, s2):
+    # variable to hold the result
     result = ''
+    # variable to hold the current index of the longer of the two strings
     long_i = 0
+    # variable to hold the current index of the shorter of the two strings
     i = 0
+    # variables for the long string and the short string
     long = ''
     short = ''
+    # logic to find the long and short strings from the given strings
     if len(s1) > len(s2):
         long = s1
         short = s2
     else:
         long = s2
         short = s1
+    # hash maps for each string to hold the number of occurrences of each
+    # letter
     short_map = {}
     long_map = {}
+    # logic creating the hash maps
     for letter in short:
         if letter not in short_map:
             short_map[letter] = 0
@@ -283,26 +295,60 @@ def mergeStrings(s1, s2):
             long_map[letter] = 0
         long_map[letter] += 1
 
+    # while the short string current index is less than the short string length
+    # and the long string index is shorter than the long string length
+    # (keeps us from index out of bounds error)
     while i < len(short) and long_i < len(long):
+        # my print statements for debugging
         print('i', i)
         print('long_i', long_i)
-        # print(chr(max(ord(short[i]), ord(long[long_i]))))
+        print(chr(max(ord(short[i]), ord(long[long_i]))))
+        # if the letter count for the short string letter at current short
+        # string index is less than the letter count for the long string
+        # letter at current long string index
         if short_map[short[i]] < long_map[long[long_i]]:
+            # add the letter from the short string at the current index to
+            # the result
             result += short[i]
+            # increment the short string current index
             i += 1
+        # if the letter count for the short string letter at the current
+        # index is greater than the letter count for the long string letter
+        # at current long string index
         elif short_map[short[i]] > long_map[long[long_i]]:
+            # add the letter from the long string at the current index to the
+            # result
             result += long[long_i]
+            # increment the long string current index
             long_i += 1
+        # if both letter have the same number of occurrences in their
+        # respective strings
         else:
+            # add the letter that comes first sequentially
             result += chr(min(ord(short[i]), ord(long[long_i])))
+            # if the long string letter was added
             if ord(short[i]) > ord(long[long_i]):
+                # increment the long string current index
                 long_i += 1
+            # else if the short string letter was added
             else:
+                # increment the short string current index
                 i += 1
+    # if the short string index is at the end of the string
+    # we have added all the letters in that string and can just add the rest
+    # of the letters in the long string to the result in the order they are in
     if i == len(short):
+        # add rest of the long string from the current index to the end of
+        # the string
         result += long[long_i:]
+    # if the long string index is at the end of the string
+    # we have added all the letters in that string and can just add the rest
+    # of the letters in the short string to the result in the order they are in
     if long_i >= len(long):
+        # add rest of the short string from the current index to the end of
+        # the string
         result += short[i:]
+    # return the result
     return result
 
 
@@ -433,6 +479,7 @@ query = [[1, 2], [2], [1], [2, 3], [1], [-1], [3]]
 
 queryType = ["insert", "insert", "addToValue", "addToKey", "get"]
 query = [[1, 2], [2, 3], [2], [1], [3]]
+
 
 def hashMap(queryType, query):
     # variable to hold the sum of each 'get' query type
