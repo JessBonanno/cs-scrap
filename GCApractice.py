@@ -136,7 +136,6 @@ def alternatingSort(a):
     # return true
     return True
 
-
 # print(alternatingSort(a))
 
 """
@@ -177,12 +176,20 @@ k = 743
 
 
 def countTinyPairs(a, b, k):
+    # variable to hold the number of tiny pairs we've encountered
     pairs = 0
+    # index of the last number in the array
     b_index = len(b) - 1
+    # iterate the array
     for i in range(len(a)):
+        # if the integer value of the string concatenation of the number at
+        # the first index and the number at the last index is less than K
+        # we found a tiny pair and can increment the pairs value + 1
         if int(str(a[i]) + str(b[b_index])) < k:
             pairs += 1
+        # decrement the last index to check the next to last number
         b_index -= 1
+    # return the number of pairs found
     return pairs
 
 
