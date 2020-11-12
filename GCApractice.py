@@ -345,15 +345,18 @@ a = [8]
 
 
 def concatenationsSum(a):
+    # variable to hold the current concatenation
     string_sum = ''
+    # result of the integer addition of concatenated strings
     result = 0
     # iterate the array
     for current_num in a:
-        # concat it with each num in the array
+        # concat it with each other num in the array
         for concat_num in a:
             string_sum = str(current_num) + str(concat_num)
+            # add the integer value of the string concatenation to the result
             result += int(string_sum)
-
+    # return the result
     return result
 
 
