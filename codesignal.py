@@ -567,11 +567,16 @@ Explanation: 12300040005 + 10001000100 = 22301040105.
 
 
 # Singly-linked lists are already defined with this interface:
-# class ListNode(object):
-#   def __init__(self, x):
-#     self.value = x
-#     self.next = None
-#
+class ListNode(object):
+  def __init__(self, x):
+    self.value = x
+    self.next = None
+
+
+a = [1]
+b = [9999, 9999, 9999, 9999, 9999, 9999]
+
+
 
 def addTwoHugeNumbers(a, b):
     if a is None and b is None:
@@ -604,12 +609,14 @@ def addTwoHugeNumbers(a, b):
     n = count
 
     res_arr = [int(result[i:i+n]) for i in range(0, len(result), n)]
-
+    print('res arr', res_arr)
     for num in res_arr:
         if num > 0:
+            num = int(str(num).rstrip('0'))
+        if len(str(a[0])) == 1:
             num = int(str(num).rstrip('0'))
 
     return res_arr
 
+print(addTwoHugeNumbers(a, b))
 
-print(str(1000).rstrip('0'))

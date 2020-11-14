@@ -183,7 +183,7 @@ def are_words_sorted(words, alpha_order):
     return True
 
 
-print(are_words_sorted(words, order))
+# print(are_words_sorted(words, order))
 
 """
 Codesignal 
@@ -297,31 +297,47 @@ Input: text = "sctlamb"
 Output: 0
 """
 
-text = "mbxcdatlas"
+text = "mbxcdatllaas"
+
+
 # text = "sctlamb"
-text = "lalaaxcmbdtsumbdav"
+# text = "lalaaxcmbdtsumbdav"
 
 
 def csMaxNumberOfLambdas(text):
     # create dict to hold number of times letters in lambda appear
+    # (the letter 'a' will need to be twice the amount of other letters for
+    # each valid lambda)
     lambdas = {"l": 0, "a": 0, "m": 0, "b": 0, "d": 0}
-    # the letter a will need to be twice the amount of other letters for each
-    # valid lambda
 
-    # get number count for valid letters from text
+    # get number count for valid letters from "text"
     for letter in text:
         if letter in lambdas:
             lambdas[letter] += 1
-    # handle case if there are no lambdas in text
-    if lambdas["a"] / 2 != lambdas['l']:
+
+    minimum_letter = lambdas['l']
+    for letter in lambdas:
+        if lambdas[letter] < minimum_letter:
+            minimum_letter = lambdas[letter]
+    print(lambdas)
+    # if there is a letter that doesn't appear return 0
+    if minimum_letter == 0:
+        return 0
+    # handle case if there are no lambdas in text, check to see of the number
+    # of occurrences of the letter 'a' / 2 is not equal to the number of
+    # occurrences of the letter 'l'
+
+    if not (lambdas["a"] // 2 >= minimum_letter):
         return 0
 
-    if lambdas['l'] == lambdas['m'] and lambdas['l'] == lambdas['b'] and \
-            lambdas['l'] == lambdas['d']:
-        return lambdas['l']
+    # check that the l = m and l = b and l = d and return
+    # the number of 'ls' found if so
+    if minimum_letter <= lambdas['l'] and minimum_letter <= lambdas['m'] and \
+            minimum_letter <= lambdas['d'] and minimum_letter <= lambdas['b']:
+    return minimum_letter
 
 
-# print(csMaxNumberOfLambdas(text))
+print(csMaxNumberOfLambdas(text))
 
 """
 week 8 guided
@@ -431,6 +447,8 @@ Note that 'B' and 'b' are treated as two different characters.
 ```
 """
 
+s = "Bbcc"
+
 
 def frequency_sort(s: str) -> str:
     """
@@ -439,8 +457,23 @@ def frequency_sort(s: str) -> str:
     Output:
     str
     """
-    # Your code here
+    letter_freq = {}
+    for char in s:
+        if char not in letter_freq:
+            letter_freq[char] = 1
+        else:
+            letter_freq[char] += 1
+    print(letter_freq)
+    result = ''
+    while len(result) < len(s):
+        result += max(letter_freq, key=letter_freq.get) * letter_freq[
+            max(letter_freq, key=letter_freq.get)]
+        del letter_freq[max(letter_freq, key=letter_freq.get)]
 
+    return result
+
+
+print(frequency_sort(s))
 
 """
 *** csisomorphicStrings ***

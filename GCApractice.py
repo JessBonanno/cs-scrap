@@ -19,7 +19,7 @@ b[1] = a[0] + a[1] + a[2] = 4 + 0 + 1 = 5
 b[2] = a[1] + a[2] + a[3] = 0 + 1 + (-2) = -1
 b[3] = a[2] + a[3] + a[4] = 1 + (-2) + 3 = 2
 b[4] = a[3] + a[4] + 0 = (-2) + 3 + 0 = 1
-So, the resulting array after the mutation will be [4, 5, -1, 2, 1].
+So, the resulting array after the mutation will be [4, 5, -1, 2, 1]
 """
 a = [4, 0, 1, -2, 3]
 n = 5
@@ -75,70 +75,46 @@ For a = [1, 4, 5, 6, 3], the output should be alternatingSort(a) = false.
 The new array b will look like [1, 3, 4, 6, 5], which is not in strictly ascending order, so the answer is false.
 """
 a = [1, 3, 5, 6, 4, 2]
-a = [1, 4, 5, 6, 3]
-a = [-92, -23, 0, 45, 89, 96, 99, 95, 89, 41, -17, -48]
+# a = [1, 4, 5, 6, 3]
+# a = [-92, -23, 0, 45, 89, 96, 99, 95, 89, 41, -17, -48]
+# a = [-91, -84, -67, -44, 9, 70, 88, 37, -11, -67, -72, -87]
+# a = [-99, -29, -7, 17, 28, 71, 98, 86, 42, 22, 0, -29, -86]
 
 
-# not fully passing
+# not fully passing (i think its working)
 def alternatingSort(a):
-    # if the array contains only a single number just return True
-    if len(a) == 1:
-        return True
-    # empty array to hold the alternating sort
+    # array to hold result
     b = []
-    # set first_i as the first index going left to right
-    first_i = 0
-    # set last_i as the last index going from right to left
-    last_i = len(a) - 1
-    # while first index is not larger than the last index ( moving past the
-    # mid point of the array )
-    while not first_i > last_i:
-        print('first', a[first_i])
-        print('last', a[last_i])
-        # if the current number equals the last number we put into the new
-        # sorted array and the indexes have met in the middle
-        # return False
-        # (tests seem to want False if there are repeating numbers)
-        # (this logic needs to be tweaked)
-        if a[first_i] == b[len(b) - 1] and first_i != last_i:
-            print(b)
-            return False
-        # if the indexes meet at any point
-        if first_i == last_i:
-            # only add the number at that index once instead of for both
-            # index markers
-            b.append(a[first_i])
-            print(a[first_i])
-            print(b[len(b) - 2])
-            # if the number about to be inserted into the new array is out of
-            # order just return False now
-            if (a[first_i]) < b[len(b) - 2]:
-                print(b)
-                return False
-        # normal case where we're just inserting number at first index
-        # followed by number at last index
+    # sorted a without duplicates to check against result array to see if
+    # result is sorted or not
+    match = sorted(set(a))
+    # while a still has numbers to sort into result array
+    while len(a) > 0:
+        # if there is an even number of items left
+        if len(b) % 2 == 0:
+            # remove first element and add to result
+            b.append(a.pop(0))
+        # else if there is an odd number of items left
         else:
-            # insert first index number
-            b.append(a[first_i])
-            # insert last index number
-            b.append(a[last_i])
-            # if the number about to be inserted into the new array is out of
-            # order just return False now
-            if a[first_i] > a[last_i]:
-                print(b)
-                return False
-        # increment first index
-        last_i -= 1
-        # decrement last index
-        first_i += 1
-
+            # remove last element and add it to the result
+            b.append(a.pop())
+    # helper function to remove duplicates from  result
+    def remove_doubles(arr):
+        for i in range(len(arr) - 1):
+            if arr[i] == arr[i + 1]:
+                b.pop(i)
+        return arr
     print(b)
-    # if we reach this point the array should be sorted and we can just
-    # return true
-    return True
 
+    remove_doubles(list(b))
+    print(b)
+    print(match)
+    # if result == the original array sorted then return True else return False
+    if b == match:
+        return True
+    return False
 
-# print(alternatingSort(a))
+print(alternatingSort(a))
 
 """
 Tiny pairs
@@ -480,6 +456,194 @@ query = [[1, 2], [2], [1], [2, 3], [1], [-1], [3]]
 queryType = ["insert", "insert", "addToValue", "addToKey", "get"]
 query = [[1, 2], [2, 3], [2], [1], [3]]
 
+queryType = ["addToKey",
+             "addToValue",
+             "insert",
+             "addToValue",
+             "addToKey",
+             "get",
+             "insert",
+             "addToValue",
+             "addToValue",
+             "get",
+             "insert",
+             "addToKey",
+             "get",
+             "addToKey",
+             "addToKey",
+             "addToValue",
+             "insert",
+             "addToValue",
+             "get",
+             "addToKey",
+             "addToKey",
+             "insert",
+             "addToValue",
+             "addToKey",
+             "addToValue",
+             "insert",
+             "get",
+             "addToKey",
+             "addToValue",
+             "get",
+             "get",
+             "get",
+             "addToValue",
+             "addToValue",
+             "get",
+             "get",
+             "insert",
+             "insert",
+             "addToKey",
+             "insert",
+             "addToValue",
+             "addToValue",
+             "addToKey",
+             "addToValue",
+             "addToValue",
+             "get",
+             "addToValue",
+             "addToKey",
+             "get",
+             "addToValue",
+             "insert",
+             "get",
+             "get",
+             "get",
+             "addToValue",
+             "addToValue",
+             "get",
+             "addToKey",
+             "get",
+             "addToKey",
+             "addToValue",
+             "get",
+             "get",
+             "addToKey",
+             "insert",
+             "addToKey",
+             "get",
+             "addToKey",
+             "addToValue",
+             "addToKey",
+             "insert",
+             "addToKey",
+             "addToValue",
+             "addToKey",
+             "addToValue",
+             "addToValue",
+             "get",
+             "get",
+             "addToKey",
+             "insert",
+             "get",
+             "get",
+             "addToKey",
+             "insert",
+             "addToKey",
+             "addToValue",
+             "addToKey",
+             "insert",
+             "addToValue",
+             "get",
+             "get",
+             "insert",
+             "get",
+             "get",
+             "addToValue",
+             "get",
+             "addToValue",
+             "insert",
+             "addToKey",
+             "addToValue"]
+
+query = [[32],
+         [-4],
+         [32, -42],
+         [19],
+         [-45],
+         [-13],
+         [29, -29],
+         [-50],
+         [40],
+         [-13],
+         [39, -11],
+         [-47],
+         [-60],
+         [16],
+         [-14],
+         [45],
+         [-34, 17],
+         [-12],
+         [-6],
+         [2],
+         [-33],
+         [-33, -6],
+         [40],
+         [-14],
+         [30],
+         [-13, 11],
+         [-61],
+         [-1],
+         [-40],
+         [-62],
+         [-52],
+         [-52],
+         [-18],
+         [-2],
+         [-104],
+         [-104],
+         [-27, -13],
+         [28, -17],
+         [-40],
+         [39, -1],
+         [-40],
+         [25],
+         [-39],
+         [46],
+         [27],
+         [-51],
+         [-33],
+         [11],
+         [-130],
+         [37],
+         [37, -20],
+         [-95],
+         [-95],
+         [11],
+         [37],
+         [-2],
+         [-40],
+         [-47],
+         [-167],
+         [13],
+         [-41],
+         [-164],
+         [-206],
+         [1],
+         [14, 19],
+         [23],
+         [-92],
+         [39],
+         [25],
+         [-33],
+         [-5, -34],
+         [-45],
+         [23],
+         [2],
+         [-13],
+         [-12],
+         [-163],
+         [-142],
+         [-4],
+         [-34, -44],
+         [-91],
+         [-34],
+         [34],
+         [-49, -19],
+         [9],
+         [-24]]
+
 
 def hashMap(queryType, query):
     # variable to hold the sum of each 'get' query type
@@ -501,19 +665,28 @@ def hashMap(queryType, query):
     def addToKey(value):
         # iterate all keys in the hash table
         for key in query_hash:
+            print('inside', query_hash)
+            print(addedHash)
+            print(query_hash[key])
             # create a new key value pair in the addedHash table with the key
             # incremented by the given value
+            if key + value in addedHash:
+                del addedHash[key]
             addedHash[key + value] = query_hash[key]
+            print(addedHash)
 
     # helper function to increment all the values by a given value
     def addToValue(value):
         # iterate all the keys in the hash table
         for key in query_hash:
             # increment the current value by the given value
-            query_hash[key] = query_hash[key] + value
+            query_hash[key] += value
 
     # iterate the queryType array
     for i in range(len(queryType)):
+        print('query type', queryType[i])
+        print('query', query[i])
+        print('hash before', query_hash)
         # if the query type is insert
         if queryType[i] == 'insert':
             # call the insert helper function with the values from the query
@@ -537,11 +710,80 @@ def hashMap(queryType, query):
             addToKey(query[i][0])
             # then set the original query_hash to equal the new addedHash
             # with the incremented keys
-            query_hash = addedHash
+            if addedHash != {}:
+                query_hash = addedHash.copy()
+        print('hash after', query_hash)
 
     print(query_hash)
     # return the sum of all the get calls
     return sum_of_gets
 
 
-print(hashMap(queryType, query))
+# print(hashMap(queryType, query))
+
+"""
+Mean Groups 
+-----------
+You are given an array of arrays a. Your task is to group the arrays a[i] by their mean values, so that arrays with equal mean values are in the same group, and arrays with different mean values are in different groups.
+
+Each group should contain a set of indices (i, j, etc), such that the corresponding arrays (a[i], a[j], etc) all have the same mean. Return the set of groups as an array of arrays, where the indices within each group are sorted in ascending order, and the groups are sorted in ascending order of their minimum element.
+
+Example
+
+For
+
+a = [[3, 3, 4, 2],
+     [4, 4],
+     [4, 0, 3, 3],
+     [2, 3],
+     [3, 3, 3]]
+the output should be
+
+meanGroups(a) = [[0, 4],
+                 [1],
+                 [2, 3]]
+mean(a[0]) = (3 + 3 + 4 + 2) / 4 = 3;
+mean(a[1]) = (4 + 4) / 2 = 4;
+mean(a[2]) = (4 + 0 + 3 + 3) / 4 = 2.5;
+mean(a[3]) = (2 + 3) / 2 = 2.5;
+mean(a[4]) = (3 + 3 + 3) / 3 = 3.
+There are three groups of means: those with mean 2.5, 3, and 4. And they form the following groups:
+
+Arrays with indices 0 and 4 form a group with mean 3;
+Array with index 1 forms a group with mean 4;
+Arrays with indices 2 and 3 form a group with mean 2.5.
+Note that neither
+
+meanGroups(a) = [[0, 4],
+                 [2, 3],
+                 [1]]
+nor
+
+meanGroups(a) = [[0, 4],
+                 [1],
+                 [3, 2]]
+will be considered as a correct answer:
+
+In the first case, the minimal element in the array at index 2 is 1, and it is less then the minimal element in the array at index 1, which is 2.
+In the second case, the array at index 2 is not sorted in ascending order.
+For
+
+a = [[-5, 2, 3],
+     [0, 0],
+     [0],
+     [-100, 100]]
+the output should be
+
+meanGroups(a) = [[0, 1, 2, 3]]
+The mean values of all of the arrays are 0, so all of them are in the same group.
+"""
+(a) = [[0, 4],
+       [2, 3],
+       [1]]
+
+
+def meanGroups(a):
+    pass
+
+
+print(meanGroups(a))
