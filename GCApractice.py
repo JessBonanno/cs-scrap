@@ -340,7 +340,7 @@ def mergeStrings(s1, s2):
 
 
 
-print(mergeStrings(s1, s2))
+# print(mergeStrings(s1, s2))
 
 """
 Concatenations Sum
@@ -377,7 +377,7 @@ The total result is 11 + 12 + 13 + 21 + 22 + 23 + 31 + 32 + 33 = 198.
 
 a = [8]
 
-
+# needs to be optimized to pass all tests currently 250/300
 def concatenationsSum(a):
     # variable to hold the current concatenation
     string_sum = ''
@@ -656,7 +656,7 @@ query = [[32],
          [9],
          [-24]]
 
-# this is not currently passing all tests
+# this is not currently passing all tests but most
 def hashMap(queryType, query):
     # variable to hold the sum of each 'get' query type
     sum_of_gets = 0
@@ -789,13 +789,35 @@ the output should be
 meanGroups(a) = [[0, 1, 2, 3]]
 The mean values of all of the arrays are 0, so all of them are in the same group.
 """
-(a) = [[0, 4],
+a = [[0, 4],
        [2, 3],
        [1]]
+a = [[3, 3, 4, 2],
+     [4, 4],
+     [4, 0, 3, 3],
+     [2, 3],
+     [3, 3, 3]]
 
-
+# passing all tests
 def meanGroups(a):
-    pass
+    # create dict to hold mean and arrays w that mean
+    means = {}
+    # iterate outer array
+    for i in range(len(a)):
+        # get the mean for each inner array
+        sum = 0
+        for num in a[i]:
+            sum += num
+        mean = sum / len(a[i])
+    # hold array and mean in dictionary
+        if mean not in means:
+            means[mean] = []
+        means[mean].append(i)
+    # return the set of each unique mean with first occurring inner array listed first
+    result = []
+    for mean in means:
+        result.append(means[mean])
+    return result
 
 
 print(meanGroups(a))
