@@ -24,7 +24,7 @@ So, the resulting array after the mutation will be [4, 5, -1, 2, 1]
 a = [4, 0, 1, -2, 3]
 n = 5
 
-
+# passing
 def mutateTheArray(n, a):
     if len(a) < 2:
         return a
@@ -77,12 +77,18 @@ The new array b will look like [1, 3, 4, 6, 5], which is not in strictly ascendi
 a = [1, 3, 5, 6, 4, 2]
 # a = [1, 4, 5, 6, 3]
 # a = [-92, -23, 0, 45, 89, 96, 99, 95, 89, 41, -17, -48]
-# a = [-91, -84, -67, -44, 9, 70, 88, 37, -11, -67, -72, -87]
-# a = [-99, -29, -7, 17, 28, 71, 98, 86, 42, 22, 0, -29, -86]
+a = [-91, -84, -67, -44, 9, 70, 88, 37, -11, -67, -72, -87]
+a = [-99, -29, -7, 17, 28, 71, 98, 86, 42, 22, 0, -29, -86]
 
 
-# not fully passing (i think its working)
+# passing
+from collections import deque
 def alternatingSort(a):
+    a = deque(a)
+    if len(a) < 2:
+        return True
+    if a == []:
+        return False
     # array to hold result
     b = []
     # sorted a without duplicates to check against result array to see if
@@ -93,22 +99,11 @@ def alternatingSort(a):
         # if there is an even number of items left
         if len(b) % 2 == 0:
             # remove first element and add to result
-            b.append(a.pop(0))
+            b.append(a.popleft())
         # else if there is an odd number of items left
         else:
             # remove last element and add it to the result
             b.append(a.pop())
-    # helper function to remove duplicates from  result
-    def remove_doubles(arr):
-        for i in range(len(arr) - 1):
-            if arr[i] == arr[i + 1]:
-                b.pop(i)
-        return arr
-    print(b)
-
-    remove_doubles(list(b))
-    print(b)
-    print(match)
     # if result == the original array sorted then return True else return False
     if b == match:
         return True
@@ -152,7 +147,7 @@ a = [16, 1, 4, 2, 14]
 b = [7, 11, 2, 0, 15]
 k = 743
 
-
+# passing
 def countTinyPairs(a, b, k):
     # variable to hold the number of tiny pairs we've encountered
     pairs = 0
@@ -239,96 +234,113 @@ expected = "owvieaqugtaleegvrabhugzyxgaegbxg"
 
 # this is a hot mess and not fully passing but getting around 260/300 on code
 # signal as is
+# edit: think its fixed need to test in codesignal now
 def mergeStrings(s1, s2):
     # variable to hold the result
     result = ''
     # variable to hold the current index of the longer of the two strings
-    long_i = 0
+    s2_index = 0
     # variable to hold the current index of the shorter of the two strings
-    i = 0
-    # variables for the long string and the short string
-    long = ''
-    short = ''
-    # logic to find the long and short strings from the given strings
-    if len(s1) > len(s2):
-        long = s1
-        short = s2
-    else:
-        long = s2
-        short = s1
+    s1_index = 0
+    # variables for the s2 string and the s1 string
+    # s2 = ''
+    # s1 = ''
+    # logic to find the s2 and s1 strings from the given strings
+    # if len(s1) > len(s2):
+    #     s2 = s1
+    #     s1 = s2
+    # else:
+    #     s2 = s2
+    #     s1 = s1
     # hash maps for each string to hold the number of occurrences of each
     # letter
-    short_map = {}
-    long_map = {}
+    s1_map = {}
+    s2_map = {}
     # logic creating the hash maps
-    for letter in short:
-        if letter not in short_map:
-            short_map[letter] = 0
-        short_map[letter] += 1
+    for letter in s1:
+        if letter not in s1_map:
+            s1_map[letter] = 0
+        s1_map[letter] += 1
 
-    for letter in long:
-        if letter not in long_map:
-            long_map[letter] = 0
-        long_map[letter] += 1
-
-    # while the short string current index is less than the short string length
-    # and the long string index is shorter than the long string length
+    for letter in s2:
+        if letter not in s2_map:
+            s2_map[letter] = 0
+        s2_map[letter] += 1
+    print('s1 map:', s1_map)
+    print('s2 map:', s2_map)
+    # while the s1 string current index is less than the s1 string length
+    # and the s2 string index is shorter than the s2 string length
     # (keeps us from index out of bounds error)
-    while i < len(short) and long_i < len(long):
+    while s1_index < len(s1) and s2_index < len(s2):
+        print('s1', s1)
+        print('s2', s2)
+        print('result:', result)
+        print('compare', 's1', s1[s1_index], 's2', s2[s2_index])
         # my print statements for debugging
-        print('i', i)
-        print('long_i', long_i)
-        print(chr(max(ord(short[i]), ord(long[long_i]))))
-        # if the letter count for the short string letter at current short
-        # string index is less than the letter count for the long string
-        # letter at current long string index
-        if short_map[short[i]] < long_map[long[long_i]]:
-            # add the letter from the short string at the current index to
+        # print('i', i)
+        # print('s2_index', s2_index)
+        # print(chr(max(ord(s1[i]), ord(s2[s2_index]))))
+        # if the letter count for the s1 string letter at current s1
+        # string index is less than the letter count for the s2 string
+        # letter at current s2 string index
+        if s1_map[s1[s1_index]] < s2_map[s2[s2_index]]:
+
+            # print('s1 i', s1[i])
+            # print('count', s1_map[s1[i]])
+            # print('s2 i', s2[s2_index])
+            # print('count', s2_map[s2[s2_index]])
+            # add the letter from the s1 string at the current index to
             # the result
-            result += short[i]
-            # increment the short string current index
-            i += 1
-        # if the letter count for the short string letter at the current
-        # index is greater than the letter count for the long string letter
-        # at current long string index
-        elif short_map[short[i]] > long_map[long[long_i]]:
-            # add the letter from the long string at the current index to the
+            result += s1[s1_index]
+            # increment the s1 string current index
+            s1_index += 1
+        # if the letter count for the s1 string letter at the current
+        # index is greater than the letter count for the s2 string letter
+        # at current s2 string index
+        elif s1_map[s1[s1_index]] > s2_map[s2[s2_index]]:
+            # add the letter from the s2 string at the current index to the
             # result
-            result += long[long_i]
-            # increment the long string current index
-            long_i += 1
+            result += s2[s2_index]
+            # increment the s2 string current index
+            s2_index += 1
         # if both letter have the same number of occurrences in their
         # respective strings
         else:
-            # add the letter that comes first sequentially
-            result += chr(min(ord(short[i]), ord(long[long_i])))
-            # if the long string letter was added
-            if ord(short[i]) > ord(long[long_i]):
-                # increment the long string current index
-                long_i += 1
-            # else if the short string letter was added
+            # TODO if both strings are equal take from s1 **********
+            if ord(s1[s1_index]) == ord(s2[s2_index]):
+                result += s1[s1_index]
+                s1_index += 1
             else:
-                # increment the short string current index
-                i += 1
-    # if the short string index is at the end of the string
+                # add the letter that comes first sequentially
+                result += chr(min(ord(s1[s1_index]), ord(s2[s2_index])))
+                # if the s2 string letter was added
+                if ord(s1[s1_index]) > ord(s2[s2_index]):
+                    # increment the s2 string current index
+                    s2_index += 1
+                # else if the s1 string letter was added
+                else:
+                    # increment the s1 string current index
+                    s1_index += 1
+    # if the s1 string index is at the end of the string
     # we have added all the letters in that string and can just add the rest
-    # of the letters in the long string to the result in the order they are in
-    if i == len(short):
-        # add rest of the long string from the current index to the end of
+    # of the letters in the s2 string to the result in the order they are in
+    if s1_index == len(s1):
+        # add rest of the s2 string from the current index to the end of
         # the string
-        result += long[long_i:]
-    # if the long string index is at the end of the string
+        result += s2[s2_index:]
+    # if the s2 string index is at the end of the string
     # we have added all the letters in that string and can just add the rest
-    # of the letters in the short string to the result in the order they are in
-    if long_i >= len(long):
-        # add rest of the short string from the current index to the end of
+    # of the letters in the s1 string to the result in the order they are in
+    if s2_index >= len(s2):
+        # add rest of the s1 string from the current index to the end of
         # the string
-        result += short[i:]
+        result += s1[s1_index:]
     # return the result
     return result
 
 
-# print(mergeStrings(s1, s2))
+
+print(mergeStrings(s1, s2))
 
 """
 Concatenations Sum
@@ -644,7 +656,7 @@ query = [[32],
          [9],
          [-24]]
 
-
+# this is not currently passing all tests
 def hashMap(queryType, query):
     # variable to hold the sum of each 'get' query type
     sum_of_gets = 0
