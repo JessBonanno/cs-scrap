@@ -332,12 +332,9 @@ def csMaxNumberOfLambdas(text):
 
     # check that the l = m and l = b and l = d and return
     # the number of 'ls' found if so
-    if minimum_letter <= lambdas['l'] and minimum_letter <= lambdas['m'] and \
-            minimum_letter <= lambdas['d'] and minimum_letter <= lambdas['b']:
-    return minimum_letter
 
 
-print(csMaxNumberOfLambdas(text))
+# print(csMaxNumberOfLambdas(text))
 
 """
 week 8 guided
@@ -473,7 +470,7 @@ def frequency_sort(s: str) -> str:
     return result
 
 
-print(frequency_sort(s))
+# print(frequency_sort(s))
 
 """
 *** csisomorphicStrings ***

@@ -24,6 +24,7 @@ So, the resulting array after the mutation will be [4, 5, -1, 2, 1]
 a = [4, 0, 1, -2, 3]
 n = 5
 
+
 # passing
 def mutateTheArray(n, a):
     if len(a) < 2:
@@ -80,9 +81,10 @@ a = [1, 3, 5, 6, 4, 2]
 a = [-91, -84, -67, -44, 9, 70, 88, 37, -11, -67, -72, -87]
 a = [-99, -29, -7, 17, 28, 71, 98, 86, 42, 22, 0, -29, -86]
 
-
 # passing
 from collections import deque
+
+
 def alternatingSort(a):
     a = deque(a)
     if len(a) < 2:
@@ -109,7 +111,8 @@ def alternatingSort(a):
         return True
     return False
 
-print(alternatingSort(a))
+
+# print(alternatingSort(a))
 
 """
 Tiny pairs
@@ -146,6 +149,7 @@ There are 4 tiny pairs during the iteration, so the answer is 4.
 a = [16, 1, 4, 2, 14]
 b = [7, 11, 2, 0, 15]
 k = 743
+
 
 # passing
 def countTinyPairs(a, b, k):
@@ -232,9 +236,7 @@ output = "owvieaqugaegbxggtaleegvrabhugzyx"
 expected = "owvieaqugtaleegvrabhugzyxgaegbxg"
 
 
-# this is a hot mess and not fully passing but getting around 260/300 on code
-# signal as is
-# edit: think its fixed need to test in codesignal now
+# fully passing
 def mergeStrings(s1, s2):
     # variable to hold the result
     result = ''
@@ -339,7 +341,6 @@ def mergeStrings(s1, s2):
     return result
 
 
-
 # print(mergeStrings(s1, s2))
 
 """
@@ -377,25 +378,53 @@ The total result is 11 + 12 + 13 + 21 + 22 + 23 + 31 + 32 + 33 = 198.
 
 a = [8]
 
+a = [1, 2, 3]
+
+a = [0, 0]
+
 # needs to be optimized to pass all tests currently 250/300
 def concatenationsSum(a):
-    # variable to hold the current concatenation
-    string_sum = ''
-    # result of the integer addition of concatenated strings
+    # variable for the result of the integer addition of concatenated strings
     result = 0
+    # variables for the current index and the index of the number being added
+    curr_i = 0
+    sum_i = 0
     # iterate the array
-    for current_num in a:
-        # concat it with each other num in the array
-        for concat_num in a:
-            string_sum = str(current_num) + str(concat_num)
-            # add the integer value of the string concatenation to the result
-            result += int(string_sum)
+    while curr_i < len(a):
+        # if the number being added is the last one
+        if sum_i == len(a) - 1:
+            # do the concatenation
+            result += int(str(a[curr_i]) + str(a[sum_i]))
+            # increment the current index
+            curr_i += 1
+            # reset the sum index to 0
+            sum_i = 0
+        # otherwise just do the concatenation and increase the index of
+        # number being added
+        else:
+            result += int(str(a[curr_i]) + str(a[sum_i]))
+            sum_i += 1
+
     # return the result
     return result
 
 
-# print(concatenationsSum(a))
+# def concatenationsSum(a):
+#     # variable to hold the current concatenation
+#     string_sum = ''
+#     # result of the integer addition of concatenated strings
+#     result = 0
+#     # iterate the array
+#     for current_num in a:
+#         # concat it with each other num in the array
+#         for concat_num in a:
+#             # add the integer value of the string concatenation to the result
+#             result += int(str(current_num) + str(concat_num))
+#     # return the result
+#     return result
 
+
+print(concatenationsSum(a))
 
 """
 HashMap
@@ -656,6 +685,7 @@ query = [[32],
          [9],
          [-24]]
 
+
 # this is not currently passing all tests but most
 def hashMap(queryType, query):
     # variable to hold the sum of each 'get' query type
@@ -682,10 +712,7 @@ def hashMap(queryType, query):
             print(query_hash[key])
             # create a new key value pair in the addedHash table with the key
             # incremented by the given value
-            if key + value in addedHash:
-                del addedHash[key]
             addedHash[key + value] = query_hash[key]
-            print(addedHash)
 
     # helper function to increment all the values by a given value
     def addToValue(value):
@@ -790,13 +817,14 @@ meanGroups(a) = [[0, 1, 2, 3]]
 The mean values of all of the arrays are 0, so all of them are in the same group.
 """
 a = [[0, 4],
-       [2, 3],
-       [1]]
+     [2, 3],
+     [1]]
 a = [[3, 3, 4, 2],
      [4, 4],
      [4, 0, 3, 3],
      [2, 3],
      [3, 3, 3]]
+
 
 # passing all tests
 def meanGroups(a):
@@ -809,7 +837,7 @@ def meanGroups(a):
         for num in a[i]:
             sum += num
         mean = sum / len(a[i])
-    # hold array and mean in dictionary
+        # hold array and mean in dictionary
         if mean not in means:
             means[mean] = []
         means[mean].append(i)
@@ -818,6 +846,5 @@ def meanGroups(a):
     for mean in means:
         result.append(means[mean])
     return result
-
 
 print(meanGroups(a))
