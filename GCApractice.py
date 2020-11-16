@@ -170,7 +170,7 @@ def countTinyPairs(a, b, k):
     return pairs
 
 
-# print(countTinyPairs(a, b, k))
+# print('pairs', countTinyPairs(a, b, k))
 
 """
 Merging Strings
@@ -268,16 +268,16 @@ def mergeStrings(s1, s2):
         if letter not in s2_map:
             s2_map[letter] = 0
         s2_map[letter] += 1
-    print('s1 map:', s1_map)
-    print('s2 map:', s2_map)
+    # print('s1 map:', s1_map)
+    # print('s2 map:', s2_map)
     # while the s1 string current index is less than the s1 string length
     # and the s2 string index is shorter than the s2 string length
     # (keeps us from index out of bounds error)
     while s1_index < len(s1) and s2_index < len(s2):
-        print('s1', s1)
-        print('s2', s2)
-        print('result:', result)
-        print('compare', 's1', s1[s1_index], 's2', s2[s2_index])
+        # print('s1', s1)
+        # print('s2', s2)
+        # print('result:', result)
+        # print('compare', 's1', s1[s1_index], 's2', s2[s2_index])
         # my print statements for debugging
         # print('i', i)
         # print('s2_index', s2_index)
@@ -308,7 +308,6 @@ def mergeStrings(s1, s2):
         # if both letter have the same number of occurrences in their
         # respective strings
         else:
-            # TODO if both strings are equal take from s1 **********
             if ord(s1[s1_index]) == ord(s2[s2_index]):
                 result += s1[s1_index]
                 s1_index += 1
@@ -341,7 +340,7 @@ def mergeStrings(s1, s2):
     return result
 
 
-# print(mergeStrings(s1, s2))
+print('merge strings', mergeStrings(s1, s2))
 
 """
 Concatenations Sum
@@ -847,4 +846,4 @@ def meanGroups(a):
         result.append(means[mean])
     return result
 
-print(meanGroups(a))
+# print(meanGroups(a))

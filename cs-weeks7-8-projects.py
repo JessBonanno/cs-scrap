@@ -567,8 +567,8 @@ Output: false
 
 pattern = "abba"
 a = "lambda school school lambda"
-pattern = "abba"
-a = "lambda lambda lambda lambda"
+# pattern = "abba"
+# a = "lambda lambda lambda lambda"
 
 
 # pattern = "aaaa"
@@ -576,14 +576,12 @@ a = "lambda lambda lambda lambda"
 
 def csWordPattern(pattern, a):
     word_arr = a.split(' ')
-    print(word_arr)
 
     if len(pattern) != len(word_arr):
         return False
 
     pattern_map = {}
     for i in range(len(pattern)):
-        print(pattern[i])
         if pattern[i] not in pattern_map:
             if word_arr[i] not in pattern_map.values():
                 pattern_map[pattern[i]] = word_arr[i]
@@ -591,7 +589,6 @@ def csWordPattern(pattern, a):
                 pattern_map[pattern[i]] = ''
         elif pattern_map[pattern[i]] != word_arr[i]:
             return False
-    print(pattern_map)
     return True
 
 
