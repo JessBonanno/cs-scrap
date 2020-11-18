@@ -567,6 +567,8 @@ Output: false
 
 pattern = "abba"
 a = "lambda school school lambda"
+
+
 # pattern = "abba"
 # a = "lambda lambda lambda lambda"
 
@@ -642,4 +644,192 @@ def csGroupAnagrams(strs):
 
     return all_results
 
+
 # print(csGroupAnagrams(strs))
+
+
+"""
+Sprint
+"""
+
+"""
+Condense Linked List
+--------------------
+Given a linked list of integers, remove any nodes from the linked list that have values that have previously occurred in the linked list. Your function should return a reference to the head of the updated linked list.
+
+Example:
+Input: (3) -> (4) -> (3) -> (2) -> (6) -> (1) -> (2) -> (6) -> N
+Output: (3) -> (4) -> (2) -> (6) -> (1) -> N
+Explanation: The input list contains redundant nodes (3), (6), and (2), so those should be removed from the list.
+
+[execution time limit] 4 seconds (py3)
+
+[input] linkedlist.integer node
+
+The head node of the linked list.
+
+[output] linkedlist.integer
+
+The head node of the updated linked list.
+"""
+
+
+# Singly-linked lists are already defined with this interface:
+# class ListNode(object):
+#   def __init__(self, x):
+#     self.value = x
+#     self.next = None
+#
+def condense_linked_list(node):
+    # keep track of seen values
+    seen_values = []
+    cur = node
+    prev = None
+    # iterate linked list from the head
+    while cur is not None:
+        print(cur.value)
+        # if current is in seen values
+        if cur.value in seen_values:
+            print('in seen', cur.value)
+            print('prev', prev.value)
+            # remove it
+            prev.next = cur.next
+        else:
+            # add cur to seen_values
+            seen_values.append(cur.value)
+            # increment current and prev
+            prev = cur
+        cur = cur.next
+    # return the head
+    return seen_values
+
+
+"""
+first non repeating character
+-----------------------------
+Given a string s consisting of small English letters, find and return the first instance of a non-repeating character in it. If there is no such character, return '_'.
+
+Example
+
+For s = "abacabad", the output should be
+first_not_repeating_character(s) = 'c'.
+
+There are 2 non-repeating characters in the string: 'c' and 'd'. Return c since it appears in the string first.
+
+For s = "abacabaabacaba", the output should be
+first_not_repeating_character(s) = '_'.
+
+There are no characters in this string that do not repeat.
+
+[execution time limit] 4 seconds (py3)
+
+[input] string s
+
+A string that contains only lowercase English letters.
+
+[output] char
+
+The first non-repeating character in s of '_' if there are no characters that do not repeat.
+"""
+
+s = "abacabad"
+
+
+def first_not_repeating_character(s):
+    # create hashmap of string and occurences of letters
+    # return the first key with the value of 1
+
+    chars = {}
+
+    for letter in s:
+        if letter not in chars:
+            chars[letter] = 1
+        else:
+            chars[letter] += 1
+
+    for key in chars:
+        if chars[key] == 1:
+            return key
+
+    return '_'
+
+# print(first_not_repeating_character(s))
+
+
+
+"""
+Uncover Spy
+-----------
+In a city-state of n people, there is a rumor going around that one of the n people is a spy for the neighboring city-state.
+
+The spy, if it exists:
+
+Does not trust anyone else.
+Is trusted by everyone else (he's good at his job).
+Works alone; there are no other spies in the city-state.
+You are given a list of pairs, trust. Each trust[i] = [a, b] represents the fact that person a trusts person b.
+
+If the spy exists and can be found, return their identifier. Otherwise, return -1.
+
+Example 1:
+
+Input: n = 2, trust = [[1, 2]]
+Output: 2
+Explanation: Person 1 trusts Person 2, but Person 2 does not trust Person 1, so Person 2 is the spy.
+Example 2:
+
+Input: n = 3, trust = [[1, 3], [2, 3]]
+Output: 3
+Explanation: Person 1 trusts Person 3, and Person 2 trusts Person 3, but Person 3 does not trust either Person 1 or Person 2. Thus, Person 3 is the spy.
+Example 3:
+
+Input: n = 3, trust = [[1, 3], [2, 3], [3, 1]]
+Output: -1
+Explanation: Person 1 trusts Person 3, Person 2 trusts Person 3, and Person 3 trusts Person 1. Since everyone trusts at least one other person, there is no spy.
+Example 4:
+
+Input: n = 3, trust = [[1, 2], [2, 3]]
+Output: -1
+Explanation: Person 1 trusts Person 2, and Person 2 trusts Person 3. However, in this situation, we don't have any one person who is trusted by everyone else. So we can't determine who the spy is in this case.
+Example 5:
+
+Input: n = 4, trust = [[1, 3],[1, 4],[2, 3],[2, 4],[4, 3]]
+Output: 3
+Explanation: Person 1 trusts Person 3 and Person 4, Person 2 trusts Person 3 and Person 4, Person 4 trusts Person 3. Everyone trusts Person 3 but Person 3 does not trust anyone, so they are the spy.
+"""
+
+n = 3
+trust = [[1,2],
+ [2,3]]
+n = 4
+trust = [[1, 3],[1, 4],[2, 3],[2, 4],[4, 3]]
+def uncover_spy(n, trust):
+    # create map of people who trust
+    # return the person who trusts no one
+    trusts = {}
+    trusted = {}
+    for i in range(1, n + 1):
+        trusts[i] = []
+        trusted[i] = []
+    for group in trust:
+        if group[0] in trusts:
+            trusts[group[0]].append(group[1])
+    for group in trust:
+        if group[1] in trusted:
+            trusted[group[1]].append(group[0])
+    print(trusts)
+    print(trusted)
+    spies = []
+    for person in trusts:
+        if len(trusts[person]) == 0:
+            spies.append(person)
+
+
+
+    if len(spies) == 1:
+        if len(trusted[spies[0]]) == n - 1:
+            return spies[0]
+    return -1
+
+
+print(uncover_spy(n, trust))

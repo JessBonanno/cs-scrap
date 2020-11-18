@@ -340,7 +340,7 @@ def mergeStrings(s1, s2):
     return result
 
 
-print('merge strings', mergeStrings(s1, s2))
+# print('merge strings', mergeStrings(s1, s2))
 
 """
 Concatenations Sum
@@ -379,51 +379,79 @@ a = [8]
 
 a = [1, 2, 3]
 
-a = [0, 0]
+
+# a = [0, 0]
+
 
 # needs to be optimized to pass all tests currently 250/300
-def concatenationsSum(a):
-    # variable for the result of the integer addition of concatenated strings
-    result = 0
-    # variables for the current index and the index of the number being added
-    curr_i = 0
-    sum_i = 0
-    # iterate the array
-    while curr_i < len(a):
-        # if the number being added is the last one
-        if sum_i == len(a) - 1:
-            # do the concatenation
-            result += int(str(a[curr_i]) + str(a[sum_i]))
-            # increment the current index
-            curr_i += 1
-            # reset the sum index to 0
-            sum_i = 0
-        # otherwise just do the concatenation and increase the index of
-        # number being added
-        else:
-            result += int(str(a[curr_i]) + str(a[sum_i]))
-            sum_i += 1
-
-    # return the result
-    return result
-
-
 # def concatenationsSum(a):
-#     # variable to hold the current concatenation
-#     string_sum = ''
-#     # result of the integer addition of concatenated strings
+#     # variable for the result of the integer addition of concatenated strings
 #     result = 0
+#     # variables for the current index and the index of the number being added
+#     front_index = 0
+#     back_index = 0
 #     # iterate the array
-#     for current_num in a:
-#         # concat it with each other num in the array
-#         for concat_num in a:
-#             # add the integer value of the string concatenation to the result
-#             result += int(str(current_num) + str(concat_num))
+#     while front_index < len(a):
+#         # if the number being added is the last one
+#         if back_index == len(a) - 1:
+#             # do the concatenation
+#             result += int(str(a[front_index]) + str(a[back_index]))
+#             # increment the current index
+#             front_index += 1
+#             # reset the sum index to 0
+#             back_index = 0
+#         # otherwise just do the concatenation and increase the index of
+#         # number being added
+#         else:
+#             result += int(str(a[front_index]) + str(a[back_index]))
+#             back_index += 1
+#
 #     # return the result
 #     return result
+def concatenationsSum(a):
+    # UPER
+    # Understand:
+    # we're going to need to return an int after concatenating strings --> int(str() ...)
 
+    # Need a sum: start it at 0
+    concatentations_sum = 0
+    # "every possible a[i] and a[j]" --> 2 indices, or 2 nested for loops
+        # iterate over the array
+        # for each index front_index:
+    for front_index in range(len(a)):
+        # front_index is the index of the first element (front of the concatenation)
+        # visit every other index to hit the possible combinations
+        # for each front_index, we want to visit _every_ j / back_index (even if j == i, or j < i)
+        for back_index in range(len(a)):
+            # back_index is the index of the second / back of the concatenation
+            # how do we concatenate?
+            # we need to convert to strings using str
+            # # str(a[front_index]), str(a[back_index])
+            # front_string = str(a[front_index])
+            # back_string = str(a[back_index])
+            # concatenate the strings using +
+            concatenated_string = str(front_string) + str(back_string)
+            # convert back to int using int()
+            concatenated_int = int(concatenated_string)
+            # add the result of ^ to sum
+            concatentations_sum += concatenated_int
 
-print(concatenationsSum(a))
+    return concatentations_sum
+    #
+
+test_cases = [
+    ([10, 2], 1344),
+    ([8], 88),
+    ([1, 2, 3], 198),
+]
+
+for input, output in test_cases:
+    print(f"For input: {input} expecting {output}")
+    actual_output = concatenationsSum(input)
+    print(f"Actual output: {actual_output}")
+    print("----")
+
+# print(concatenationsSum(a))
 
 """
 HashMap
@@ -496,269 +524,125 @@ query = [[1, 2], [2], [1], [2, 3], [1], [-1], [3]]
 queryType = ["insert", "insert", "addToValue", "addToKey", "get"]
 query = [[1, 2], [2, 3], [2], [1], [3]]
 
-queryType = ["addToKey",
-             "addToValue",
-             "insert",
-             "addToValue",
-             "addToKey",
-             "get",
-             "insert",
-             "addToValue",
-             "addToValue",
-             "get",
-             "insert",
-             "addToKey",
-             "get",
-             "addToKey",
-             "addToKey",
-             "addToValue",
-             "insert",
-             "addToValue",
-             "get",
-             "addToKey",
-             "addToKey",
-             "insert",
-             "addToValue",
-             "addToKey",
-             "addToValue",
-             "insert",
-             "get",
-             "addToKey",
-             "addToValue",
-             "get",
-             "get",
-             "get",
-             "addToValue",
-             "addToValue",
-             "get",
-             "get",
-             "insert",
-             "insert",
-             "addToKey",
-             "insert",
-             "addToValue",
-             "addToValue",
-             "addToKey",
-             "addToValue",
-             "addToValue",
-             "get",
-             "addToValue",
-             "addToKey",
-             "get",
-             "addToValue",
-             "insert",
-             "get",
-             "get",
-             "get",
-             "addToValue",
-             "addToValue",
-             "get",
-             "addToKey",
-             "get",
-             "addToKey",
-             "addToValue",
-             "get",
-             "get",
-             "addToKey",
-             "insert",
-             "addToKey",
-             "get",
-             "addToKey",
-             "addToValue",
-             "addToKey",
-             "insert",
-             "addToKey",
-             "addToValue",
-             "addToKey",
-             "addToValue",
-             "addToValue",
-             "get",
-             "get",
-             "addToKey",
-             "insert",
-             "get",
-             "get",
-             "addToKey",
-             "insert",
-             "addToKey",
-             "addToValue",
-             "addToKey",
-             "insert",
-             "addToValue",
-             "get",
-             "get",
-             "insert",
-             "get",
-             "get",
-             "addToValue",
-             "get",
-             "addToValue",
-             "insert",
-             "addToKey",
-             "addToValue"]
-
-query = [[32],
-         [-4],
-         [32, -42],
-         [19],
-         [-45],
-         [-13],
-         [29, -29],
-         [-50],
-         [40],
-         [-13],
-         [39, -11],
-         [-47],
-         [-60],
-         [16],
-         [-14],
-         [45],
-         [-34, 17],
-         [-12],
-         [-6],
-         [2],
-         [-33],
-         [-33, -6],
-         [40],
-         [-14],
-         [30],
-         [-13, 11],
-         [-61],
-         [-1],
-         [-40],
-         [-62],
-         [-52],
-         [-52],
-         [-18],
-         [-2],
-         [-104],
-         [-104],
-         [-27, -13],
-         [28, -17],
-         [-40],
-         [39, -1],
-         [-40],
-         [25],
-         [-39],
-         [46],
-         [27],
-         [-51],
-         [-33],
-         [11],
-         [-130],
-         [37],
-         [37, -20],
-         [-95],
-         [-95],
-         [11],
-         [37],
-         [-2],
-         [-40],
-         [-47],
-         [-167],
-         [13],
-         [-41],
-         [-164],
-         [-206],
-         [1],
-         [14, 19],
-         [23],
-         [-92],
-         [39],
-         [25],
-         [-33],
-         [-5, -34],
-         [-45],
-         [23],
-         [2],
-         [-13],
-         [-12],
-         [-163],
-         [-142],
-         [-4],
-         [-34, -44],
-         [-91],
-         [-34],
-         [34],
-         [-49, -19],
-         [9],
-         [-24]]
-
 
 # this is not currently passing all tests but most
 def hashMap(queryType, query):
-    # variable to hold the sum of each 'get' query type
+    # we want to build on top of pythons built in {}
+    # we need our hashmap {}
+    hash_map = {}
+    # make helper functions for the different queries (get, insert, addToValue, addToKey)
     sum_of_gets = 0
-    # variable to hold the hash table
-    query_hash = {}
-    # variable to hold a new hash table for use with the addToKey function
-    addedHash = {}
-
-    # helper function to insert a new key value pair into the hash table
-    def insert(key, value):
-        query_hash[key] = value
-
-    # helper function to get a value with a given key
-    def get(key):
-        return query_hash[key]
-
-    # helper function to increment all the keys by a given value
-    def addToKey(value):
-        # iterate all keys in the hash table
-        for key in query_hash:
-            print('inside', query_hash)
-            print(addedHash)
-            print(query_hash[key])
-            # create a new key value pair in the addedHash table with the key
-            # incremented by the given value
-            addedHash[key + value] = query_hash[key]
-
-    # helper function to increment all the values by a given value
-    def addToValue(value):
-        # iterate all the keys in the hash table
-        for key in query_hash:
-            # increment the current value by the given value
-            query_hash[key] += value
-
-    # iterate the queryType array
+    # iterate through queryType and query and call the corresponding helper functions
     for i in range(len(queryType)):
-        print('query type', queryType[i])
-        print('query', query[i])
-        print('hash before', query_hash)
-        # if the query type is insert
-        if queryType[i] == 'insert':
-            # call the insert helper function with the values from the query
-            # array that corresponds to the query type
-            insert(query[i][0], query[i][1])
-        # if the query type is get
-        elif queryType[i] == 'get':
-            # increment the sum_of_gets with the value returned from calling
-            # the helper get function with the values from the query array
-            # that corresponds to the query type
-            sum_of_gets += get(query[i][0])
-        # if the query type is addToValeu
-        elif queryType[i] == 'addToValue':
-            # call the add to value helper function with the value from the
-            # query array that corresponds to the query type
-            addToValue(query[i][0])
-        # else if the query type is addToKey
-        else:
-            # call the addToKey helper function with the value from the
-            # query array that corresponds to the query type
-            addToKey(query[i][0])
-            # then set the original query_hash to equal the new addedHash
-            # with the incremented keys
-            if addedHash != {}:
-                query_hash = addedHash.copy()
-        print('hash after', query_hash)
+        method_name = queryType[i]
+        parameters = query[i]
+        # print(method_name, parameters)
+        if method_name == "insert":
+            hash_map = handle_insert(hash_map, parameters)
+        elif method_name == "get":
+            value = handle_get(hash_map, parameters)
+            sum_of_gets += value
+        elif method_name == "addToKey":
+            hash_map = handle_add_to_key(hash_map, parameters)
+        elif method_name == "addToValue":
+            hash_map = handle_add_to_value(hash_map, parameters)
 
-    print(query_hash)
-    # return the sum of all the get calls
+
     return sum_of_gets
+# keep track of the sum of get queries
 
 
-# print(hashMap(queryType, query))
+def handle_insert(hash_map, parameters):
+    key = parameters[0]
+    value = parameters[1]
+    hash_map[key] = value
+    return hash_map
 
+
+
+def handle_get(hash_map, parameters):
+    key = parameters[0]
+    return hash_map[key]
+
+
+
+def handle_add_to_key(hash_map, parameters):
+    offset = parameters[0]
+    # add `offset` to every key in hash_map
+    # safer to create a new dictionary
+    new_hash_map = {}
+    # iterate through the keys and values in the old dictionary
+    for key, value in hash_map.items():
+        # add `offset` to the key and put it into the new dictionary
+        new_key = key + offset
+        new_hash_map[new_key] = value
+    return new_hash_map
+
+
+def handle_add_to_value(hash_map, parameters):
+    offset = parameters[0]
+    # we want to add offset to every value in hash_map
+    for key, value in hash_map.items():
+        new_value = value + offset
+        hash_map[key] = new_value
+    return hash_map
+
+
+test_cases = [
+    {"queryType": ["insert", "insert", "addToValue", "addToKey", "get"],
+     "query": [[1, 2], [2, 3], [2], [1], [3]],
+     "expected_output": 5},
+    {"queryType": ["insert", "addToValue", "get", "insert", "addToKey",
+                   "addToValue", "get"],
+     "query": [[1, 2], [2], [1], [2, 3], [1], [-1], [3]],
+     "expected_output": 6},
+    {"queryType": ["addToKey", "addToKey", "insert", "addToValue", "addToValue",
+                   "get", "addToKey", "insert",
+                   "addToKey", "addToValue"],
+     "query": [[-3], [-1], [0, -3], [3], [-1], [0], [-1], [-4, -5], [-1], [-4]],
+     "expected_output": -1},
+    {"queryType": ["insert", "insert", "addToKey", "addToKey", "addToKey",
+                   "insert", "addToValue", "addToKey",
+                   "addToKey", "get"],
+     "query": [[-5, -2], [2, 4], [-1], [-3], [1], [3, -2], [-4], [-2], [2],
+               [-8]],
+     "expected_output": -6},
+    {"queryType": ["insert", "get", "insert", "addToValue", "addToValue",
+                   "addToValue", "insert", "addToKey", "get",
+                   "insert"],
+     "query": [[2, 1], [2], [1, 3], [-1], [0], [3], [4, -5], [3], [4], [1, 1]],
+     "expected_output": 6},
+    {"queryType": ["addToValue", "addToValue", "insert", "get", "addToKey",
+                   "insert", "insert", "insert", "addToValue",
+                   "addToKey"],
+     "query": [[-5], [3], [3, -3], [3], [0], [-4, 2], [0, -3], [-2, 4], [2],
+               [2]],
+     "expected_output": -3},
+    {"queryType": ["addToKey", "addToKey", "insert", "addToKey", "addToValue",
+                   "addToKey", "addToValue", "insert", "get",
+                   "insert"],
+     "query": [[-1], [-3], [4, 3], [2], [2], [-2], [0], [-5, 3], [-5], [3, -4]],
+     "expected_output": 3},
+    {"queryType": ["insert", "insert", "insert", "get", "insert", "insert",
+                   "insert", "addToKey", "insert", "insert"],
+     "query": [[3, -4], [-4, 3], [4, -3], [4], [-5, 0], [-2, -5], [2, 2], [1],
+               [-5, -2], [1, 3]],
+     "expected_output": -3},
+    {"queryType": ["addToValue", "addToKey", "addToKey", "insert", "addToValue",
+                   "addToValue", "insert", "get", "get", "insert"],
+     "query": [[-2], [-3], [0], [-3, 1], [-2], [-4], [2, -4], [2], [2],
+               [3, -1]],
+     "expected_output": -8}
+]
+
+for test_case in test_cases:
+    query_type = test_case['queryType']
+    query = test_case['query']
+    print(
+        f"Input:\nqueryType: {query_type}\nquery: {query}\nexpected_output: {test_case['expected_output']}")
+    actual_output = hashMap(query_type, query)
+    print(f"Actual output: {actual_output}")
+    print("-----")
 """
 Mean Groups 
 -----------
