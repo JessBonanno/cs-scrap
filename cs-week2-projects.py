@@ -247,6 +247,8 @@ def fibonacci(n):
         lst.append(lst[i - 2] + lst[i - 1])
 
     return lst[n - 1]
+
+
 # # O(n)
 #
 # """
@@ -267,6 +269,8 @@ def fibonacci_two(n):
         x, y = y, z
 
     return z
+
+
 # # O(1)
 #
 # """
@@ -597,35 +601,36 @@ def roman_to_integer(roman):
         'C': 100,
         'D': 500,
         'M': 1000,
+        'IV': 4,
+        'IX': 9,
+        'XL': 40,
+        'XC': 90,
+        'CD': 400,
+        'CM': 900
     }
-    # get the digits for each letter
-    digits = []
-    ordered = []
-    if len(roman) < 2:
-        return numerals.get(roman)
-    tally = 0
-    for i in range(len(roman)):
-        digits.append(numerals.get(roman[i]))
-    ordered = sorted(digits, reverse=True)
-    # if the numbers are descending just sum them up
-    if ordered == digits:
-        return sum(digits)
-    else:
-        i, j = 0, 1
-        print(digits)
-        for _ in range(len(digits) - 1):
-            if digits[i] < digits[j]:
-                tally += digits[j] - digits[i]
-            else:
-                print('i:', digits[i])
-                print('j:', digits[j])
-                tally += digits[i] + digits[j]
+    #  init i as our starting index
+    i = 0
+    # init num to hold the resulting addition of the found roman numerals
+    num = 0
+    # iterate the string
+    while i < len(roman):
+        #  if there are 2 chars to check and they are both in numerals
+        if i + 1 < len(roman) and roman[i:i + 2] in numerals:
+            # add the integer version of the found 2 character roman numeral to
+            # the num var
+            num += numerals[roman[i:i + 2]]
+            # increment counter by 2 since we found a 2 character roman numeral
+            i += 2
+        else:
+            # add the integer version of the found roman numeral to the num var
+            num += numerals[roman[i]]
+            # increment counter by 1 since we found a single character roman
+            # numeral
             i += 1
-            j += 1
-    return tally
+    return num
 
 
-# print(roman_to_integer(roman))
+print('roman to int', roman_to_integer(roman))
 
 """
 Given a list of integers `lst`, any integer with a frequency that is equal to its value is considered a **lucky integer**.
@@ -654,6 +659,4 @@ def find_lucky(lst):
         return -1
     return max(lucky)
 
-
 # print(find_lucky(lst))
-

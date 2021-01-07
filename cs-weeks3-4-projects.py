@@ -1057,24 +1057,49 @@ def csSearchRotatedSortedArray(nums, target):
 
     while not max < min:
         guess = (max + min) // 2
-
+        # print(f'min: {nums[min]} max: {nums[max]} guess:{nums[guess]} target:'
+        #       f' {target}')
+        # if the guess is the target we got it and return the guess
         if nums[guess] == target:
+            # print('guessed the target')
             return guess
+        # if min is less than or equal to the guess
         elif nums[min] <= nums[guess]:
+            # print('min less than guess')
+            # if min is less than or equal to the target and less than the guess
             if nums[min] <= target < nums[guess]:
+                # print('min less than or equal to target and less than guess')
+                # we can set max to the guess because nothing past the guess
+                # can be the target
                 max = guess
+                # else we can set min to guess + 1 because nothing before it
+                # can be the target
             else:
+                # print('min is greater than target and greater than or equal '
+                #       'to guess')
                 min = guess + 1
+        # else if min is greater than the guess
         else:
+            print('min is greater than or equal to guess')
+            # if max - 1 is greater than the target and greater than the guess
             if nums[max - 1] >= target > nums[guess]:
+                # print('max - 1 greater than or equal to target and greater '
+                #       'than guess')
+                # we can set min to guess plus one because nothing before it
+                # can be the target
                 min = guess + 1
             else:
+                # print('max -1 less than target and less than or equal to guess')
+                # else we set max equal to guess because nothing after it can
+                # be the target
                 max = guess
 
     return -1
 
-
-# print(csSearchRotatedSortedArray([6, 7, 0, 1, 2, 3, 4, 5], 6))
+# print(f'search rotate'
+#       f'd array: '
+#       f''
+#       f'{csSearchRotatedSortedArray([45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44], 48)}')
 
 """
 Challenge
@@ -1347,7 +1372,7 @@ def firstDraftWithTypo(n):
     return -1
 
 
-print(firstDraftWithTypo(n))
+# print(firstDraftWithTypo(n))
 
 """
 Cookie Monster can eat either 1, 2, or 3 cookies at a time. If he were given a
@@ -1608,7 +1633,7 @@ def checkBlanagrams(word1, word2):
     return False
 
 
-print(checkBlanagrams(word1, word2))
+# print(checkBlanagrams(word1, word2))
 
 """
 *** Find value sorted shifted array ***

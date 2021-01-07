@@ -136,25 +136,36 @@ a = [[1, 2, 3],  # 1 -> [0 : len - 1] 2 -> [1 : len - 1] 3 -> [2 : len -1]
      [7, 8, 9]]  # 7 -> [0 : len - 3] 8 -> [1 : len - 3] 9 -> [2 : len -3]
 
 
-# def rotateImage(a):
-#     length = len(a[0])
-#     for i in range(length // 2):
-#         for j in range(i, length - i -1):
-#             holder = a[i][j]
-#             a[i][j] = a[length - 1 - j][i]
-#             a[length - 1 - j][i] = a[length - 1 - i][length - 1 - j]
-#             a[length - 1 - i][length - 1 - j] = a[j][length - 1 - i]
-#             a[j][length - 1 - i] = holder
-#
-#     return a
+def rotateImage(a):
+    # initialized the length of a set at 0
+    length = len(a[0])
+    # iterate through the length // 2
+    for idx1 in range(length // 2):
+        print(f'idx1, {idx1}')
+        # starting from idx1, iterate (num3) over length idx1 -1 -  (should get 1)
+        for idx2 in range(idx1, length - idx1 - 1):
+            print(f'idx2, {idx2}')
+            # initialize a placeholder
+            holder = a[idx1][idx2]
+            print(f'holder, {holder}')
+            # replace the item at the cur_index of  a[idx1][idx2], with the item 90 degrees before              it
+            a[idx1][idx2] = a[length - 1 - idx2][idx1]
+            # replace the item moved with the item 90 degrees before it
+            a[length - 1 - idx2][idx1] = a[length - 1 - idx1][length - 1 - idx2]
+            # replace the item moved with the item 90 degrees before it
+            a[length - 1 - idx1][length - 1 - idx2] = a[idx2][length - 1 - idx1]
+            # replace the item moved with the item 90 degrees before it, which is the holder
+            a[idx2][length - 1 - idx1] = holder
+    return a
+
 
 # with zip
 # def rotateImage(a):
 #     return list(zip(*reversed(a)))
 
 # with comprehension
-def rotateImage(a):
-    return [[x[i] for x in a][::-1] for i in range(len(a))]
+# def rotateImage(a):
+#     return [[x[i] for x in a][::-1] for i in range(len(a))]
 
 
 # print(rotateImage(a))
@@ -568,14 +579,13 @@ Explanation: 12300040005 + 10001000100 = 22301040105.
 
 # Singly-linked lists are already defined with this interface:
 class ListNode(object):
-  def __init__(self, x):
-    self.value = x
-    self.next = None
+    def __init__(self, x):
+        self.value = x
+        self.next = None
 
 
 a = [1]
 b = [9999, 9999, 9999, 9999, 9999, 9999]
-
 
 
 # my code couldn't get to pass
@@ -731,6 +741,3 @@ def rearrangeLastN(l, n):
     new_last_node.next = None
     cur = new_head
     return new_head
-
-
-
