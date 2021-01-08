@@ -946,16 +946,22 @@ fibonacciSimpleSum2(n) = false
 
 
 def fibonacciSimpleSum2(n):
-    # first get fibonacci sequence up to n
-
+    # if 0 is less than n and n is less than 5 then we know we can return
+    # true because n will be 1-4 which can be created with 2 fib numbers
     if 0 < n < 5:
         return True
 
+    # first get fibonacci sequence up to n
     seq = [0, 1]
+    # starting from 2 and ending at n
     for i in range(2, n):
+        # add seq at i - 2 (0 to start) and seq at i - 1 (1 to start)
         fib = seq[i - 2] + seq[i - 1]
+        # if n is greater than fib
         if n >= fib:
+            # we can append fib to the sequence
             seq.append(fib)
+            # if fib is greater than or equal to n we can stop
         else:
             break
     print(seq)
@@ -970,7 +976,6 @@ def fibonacciSimpleSum2(n):
     # My check
     for i in range(len(seq) - 1):  # O(n^2)
         j = 0
-
         while (seq[i] + seq[j]) != n:
             if j == len(seq) - 1:
                 break
@@ -982,7 +987,7 @@ def fibonacciSimpleSum2(n):
     return False
 
 
-# print(fibonacciSimpleSum2(5))
+print(fibonacciSimpleSum2(5))
 
 """
 Given a sorted (in ascending order) integer array nums of n elements and a target value, write a function to search for target in nums. If target exists, then return its index, otherwise, return -1.
